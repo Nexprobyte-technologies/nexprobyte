@@ -23,9 +23,11 @@ import { AdminBlogs } from "./admin/AdminBlogs.jsx";
 
 function isTokenValid(token) {
   try {
-    const payload = JSON.parse(atob(token.split(".")[1]));
-    // Check expiry (exp is in seconds)
-    return payload.exp * 1000 > Date.now();
+    // JWT uses URL-safe base64 (- and _); atob() needs standard base64 (+ and /)
+    const base64 = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+    const payload = JSON.parse(atob(base64));
+    // exp is in seconds; compare against current time in ms
+    return typeof payload.exp === "number" && payload.exp * 1000 > Date.now();
   } catch {
     return false;
   }
