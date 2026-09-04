@@ -21,9 +21,24 @@ import { AdminInquiries } from "./admin/AdminInquiries.jsx";
 import { AdminAbout } from "./admin/AdminAbout.jsx";
 import { AdminBlogs } from "./admin/AdminBlogs.jsx";
 
+function isTokenValid(token) {
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    // Check expiry (exp is in seconds)
+    return payload.exp * 1000 > Date.now();
+  } catch {
+    return false;
+  }
+}
+
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("nex_admin_token");
-  if (!token) return <Navigate to="/admin/login" replace />;
+  if (!token || !isTokenValid(token)) {
+    // Clear invalid/expired token
+    localStorage.removeItem("nex_admin_token");
+    localStorage.removeItem("nex_admin_user");
+    return <Navigate to="/admin/login" replace />;
+  }
   return children;
 }
 

@@ -12,10 +12,15 @@ export function AdminLogin() {
 
   useEffect(() => {
     document.body.classList.add("admin-route");
+    // If already logged in, redirect to admin dashboard
+    const token = localStorage.getItem("nex_admin_token");
+    if (token) {
+      navigate("/admin", { replace: true });
+    }
     return () => {
       document.body.classList.remove("admin-route");
     };
-  }, []);
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
