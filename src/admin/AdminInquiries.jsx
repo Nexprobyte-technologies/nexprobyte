@@ -109,7 +109,7 @@ export function AdminInquiries() {
                 <tr>
                   <th>Lead</th>
                   <th>Service</th>
-                  <th>Message</th>
+                  <th style={{ width: 180, maxWidth: 180 }}>Message</th>
                   <th>Received</th>
                   <th>Status</th>
                   <th style={{ textAlign:"right", paddingRight:24 }}>Actions</th>
@@ -137,11 +137,21 @@ export function AdminInquiries() {
                         fontSize:12, fontWeight:600,
                       }}>{inq.service}</span>
                     </td>
-                    <td style={{ maxWidth:220 }}>
-                      <span style={{ color:"#64748b", fontSize:13 }}
-                        title={inq.message}>
-                        {inq.message?.slice(0,60)}{inq.message?.length > 60 ? "…" : ""}
-                      </span>
+                    <td style={{ width: 180, maxWidth: 180 }}>
+                      <div
+                        style={{
+                          width: 180,
+                          maxWidth: 180,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          color: "var(--p-text-muted)",
+                          fontSize: 13,
+                        }}
+                        title={inq.message}
+                      >
+                        {inq.message}
+                      </div>
                     </td>
                     <td style={{ color:"#64748b", fontSize:12.5, whiteSpace:"nowrap" }}>
                       {new Date(inq.createdAt).toLocaleDateString("en-IN", {
