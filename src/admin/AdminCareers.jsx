@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./admin-styles.css";
 
 const DEPT_COLORS = {
@@ -9,6 +10,7 @@ const DEPT_COLORS = {
 };
 
 export function AdminCareers() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("jobs"); // 'jobs' or 'applications'
   const [jobs, setJobs] = useState([]);
   const [applications, setApplications] = useState([]);
@@ -42,11 +44,21 @@ export function AdminCareers() {
   const fetchData = async () => {
     setLoading(true);
     const token = localStorage.getItem("nex_admin_token");
+    if (!token) {
+      navigate("/admin/login");
+      return;
+    }
     try {
       const [jRes, aRes] = await Promise.all([
         fetch("/api/jobs"),
         fetch("/api/applications", { headers: { Authorization: `Bearer ${token}` } }),
       ]);
+      if (aRes.status === 401 || aRes.status === 403) {
+        localStorage.removeItem("nex_admin_token");
+        localStorage.removeItem("nex_admin_user");
+        navigate("/admin/login");
+        return;
+      }
       if (jRes.ok) setJobs(await jRes.json());
       if (aRes.ok) setApplications(await aRes.json());
     } catch (e) {
@@ -124,6 +136,14 @@ export function AdminCareers() {
       });
 
       const data = await res.json();
+      if (res.status === 401 || res.status === 403) {
+        // Session expired — clear token and send to login
+        localStorage.removeItem("nex_admin_token");
+        localStorage.removeItem("nex_admin_user");
+        setShowModal(false);
+        navigate("/admin/login");
+        return;
+      }
       if (!res.ok) {
         throw new Error(data.message || "Failed to save job listing.");
       }
