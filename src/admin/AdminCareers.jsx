@@ -100,6 +100,11 @@ export function AdminCareers() {
     if (!formData.excerpt.trim()) return setFormError("Short summary excerpt is required.");
 
     const token = localStorage.getItem("nex_admin_token");
+    if (!token) {
+      navigate("/admin/login");
+      return;
+    }
+
     const ep = editingJob ? `/api/jobs/${editingJob._id || editingJob.id}` : "/api/jobs";
     const method = editingJob ? "PUT" : "POST";
 
@@ -109,17 +114,26 @@ export function AdminCareers() {
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({
           ...formData,
-          responsibilities: formData.responsibilities.split("\n").filter((s) => s.trim()),
-          requirements: formData.requirements.split("\n").filter((s) => s.trim()),
+          responsibilities: typeof formData.responsibilities === "string"
+            ? formData.responsibilities.split("\n").map((s) => s.trim()).filter(Boolean)
+            : formData.responsibilities || [],
+          requirements: typeof formData.requirements === "string"
+            ? formData.requirements.split("\n").map((s) => s.trim()).filter(Boolean)
+            : formData.requirements || [],
         }),
       });
-      if (!res.ok) throw new Error("Failed to save job.");
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to save job listing.");
+      }
+
       setSuccessMsg(editingJob ? "Job updated successfully!" : "New job posted successfully!");
       setShowModal(false);
       fetchData();
       setTimeout(() => setSuccessMsg(""), 4000);
     } catch (err) {
-      setFormError(err.message || "An error occurred.");
+      setFormError(err.message || "An error occurred while saving.");
     }
   };
 

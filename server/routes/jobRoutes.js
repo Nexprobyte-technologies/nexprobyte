@@ -10,9 +10,9 @@ router.get("/", async (req, res) => {
   if (getMongoConnected()) {
     try {
       const docs = await Job.find().sort({ createdAt: -1 });
-      return res.json(docs);
+      if (docs && docs.length > 0) return res.json(docs);
     } catch (e) {
-      console.error(e);
+      console.error("Fetch jobs error from Mongo:", e);
     }
   }
   return res.json(memoryStore.jobs);
@@ -20,36 +20,38 @@ router.get("/", async (req, res) => {
 
 // Create Job (POST /api/jobs - Admin Protected)
 router.post("/", verifyToken, async (req, res) => {
-  const { title, dept, location, type, salary, excerpt, responsibilities, requirements } = req.body;
+  const { title, dept, location, type, salary, excerpt, responsibilities, requirements, palette } = req.body;
 
-  if (!title || !dept || !location || !salary || !excerpt) {
-    return res.status(400).json({ message: "Title, department, location, salary and excerpt are required." });
+  if (!title || !title.trim()) {
+    return res.status(400).json({ message: "Job title is required." });
   }
 
-  const slug = title
+  let slug = title
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
+  if (!slug) slug = "job-" + Date.now();
+
   const newJob = {
     _id: "job-" + Date.now(),
     slug,
-    title,
-    dept,
-    location,
+    title: title.trim(),
+    dept: (dept || "Engineering").trim(),
+    location: (location || "Coimbatore / Remote").trim(),
     type: type || "Full-time",
-    salary,
-    palette: "cobalt",
-    excerpt,
+    salary: (salary || "Competitive").trim(),
+    palette: palette || "cobalt",
+    excerpt: (excerpt || title).trim(),
     responsibilities: Array.isArray(responsibilities)
       ? responsibilities
       : responsibilities
-      ? responsibilities.split("\n").filter(Boolean)
+      ? responsibilities.split("\n").map((s) => s.trim()).filter(Boolean)
       : [],
     requirements: Array.isArray(requirements)
       ? requirements
       : requirements
-      ? requirements.split("\n").filter(Boolean)
+      ? requirements.split("\n").map((s) => s.trim()).filter(Boolean)
       : [],
     active: true,
     createdAt: new Date().toISOString(),
@@ -57,10 +59,17 @@ router.post("/", verifyToken, async (req, res) => {
 
   if (getMongoConnected()) {
     try {
+      // Check if slug already exists in Mongo
+      const existing = await Job.findOne({ slug: newJob.slug });
+      if (existing) {
+        newJob.slug = `${newJob.slug}-${Date.now().toString().slice(-4)}`;
+      }
       const doc = await Job.create(newJob);
       return res.status(201).json(doc);
     } catch (e) {
-      console.error(e);
+      console.error("Job create error in MongoDB:", e);
+      memoryStore.jobs.unshift(newJob);
+      return res.status(201).json(newJob);
     }
   }
 
@@ -75,14 +84,19 @@ router.put("/:id", verifyToken, async (req, res) => {
 
   if (getMongoConnected()) {
     try {
-      const doc = await Job.findByIdAndUpdate(id, updates, { new: true });
-      return res.json(doc);
+      let doc = null;
+      if (id.startsWith("job-")) {
+        doc = await Job.findOneAndUpdate({ $or: [{ _id: id }, { slug: id }] }, updates, { new: true });
+      } else {
+        doc = await Job.findByIdAndUpdate(id, updates, { new: true });
+      }
+      if (doc) return res.json(doc);
     } catch (e) {
-      console.error(e);
+      console.error("Job update error in Mongo:", e);
     }
   }
 
-  const index = memoryStore.jobs.findIndex((j) => j._id === id || j.id === id);
+  const index = memoryStore.jobs.findIndex((j) => j._id === id || j.id === id || j.slug === id);
   if (index !== -1) {
     memoryStore.jobs[index] = { ...memoryStore.jobs[index], ...updates };
     return res.json(memoryStore.jobs[index]);
@@ -96,14 +110,18 @@ router.delete("/:id", verifyToken, async (req, res) => {
 
   if (getMongoConnected()) {
     try {
-      await Job.findByIdAndDelete(id);
+      if (id.startsWith("job-")) {
+        await Job.findOneAndDelete({ $or: [{ _id: id }, { slug: id }] });
+      } else {
+        await Job.findByIdAndDelete(id);
+      }
       return res.json({ message: "Job deleted." });
     } catch (e) {
-      console.error(e);
+      console.error("Job delete error in Mongo:", e);
     }
   }
 
-  memoryStore.jobs = memoryStore.jobs.filter((j) => j._id !== id && j.id !== id);
+  memoryStore.jobs = memoryStore.jobs.filter((j) => j._id !== id && j.id !== id && j.slug !== id);
   return res.json({ message: "Job deleted." });
 });
 
