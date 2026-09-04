@@ -20,6 +20,13 @@ const SERVICES = [
   "SEO Services",
 ];
 
+const SOCIALS = [
+  { key: "f", label: "Facebook", href: "#" },
+  { key: "X", label: "X (Twitter)", href: "#" },
+  { key: "in", label: "LinkedIn", href: "https://www.linkedin.com/in/nextprobytetechnologies" },
+  { key: "ig", label: "Instagram", href: "#" },
+];
+
 export function Footer() {
   return (
     <footer className="footer wrap">
@@ -37,9 +44,16 @@ export function Footer() {
             technology, design and marketing.
           </p>
           <div className="socials">
-            {["f", "X", "in", "ig"].map((s) => (
-              <a key={s} href="#top" className="social" aria-label={`${s} profile`}>
-                {s}
+            {SOCIALS.map((s) => (
+              <a
+                key={s.key}
+                href={s.href}
+                target={s.href.startsWith("http") ? "_blank" : undefined}
+                rel={s.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="social"
+                aria-label={`${s.label} profile`}
+              >
+                {s.key}
               </a>
             ))}
           </div>
