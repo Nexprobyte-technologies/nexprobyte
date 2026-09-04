@@ -37,8 +37,8 @@ export default function Careers() {
     fetch("/api/jobs")
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setJobsList(data);
+        if (Array.isArray(data)) {
+          setJobsList(data.filter((j) => j.active !== false));
         }
       })
       .catch((e) => console.error(e));

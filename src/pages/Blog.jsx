@@ -14,8 +14,8 @@ export default function Blog() {
     fetch("/api/posts")
       .then((res) => res.json())
       .then((data) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setPostsList(data);
+        if (Array.isArray(data)) {
+          setPostsList(data.filter((p) => p.published !== false));
         }
       })
       .catch((e) => console.error("Could not fetch blog posts from backend:", e));

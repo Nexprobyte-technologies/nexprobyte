@@ -22,12 +22,19 @@ import { AdminAbout } from "./admin/AdminAbout.jsx";
 import { AdminBlogs } from "./admin/AdminBlogs.jsx";
 
 function isTokenValid(token) {
+  if (!token || typeof token !== "string") return false;
+  const parts = token.split(".");
+  if (parts.length !== 3) return false;
   try {
-    // JWT uses URL-safe base64 (- and _); atob() needs standard base64 (+ and /)
-    const base64 = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+    let base64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
+    while (base64.length % 4) {
+      base64 += "=";
+    }
     const payload = JSON.parse(atob(base64));
-    // exp is in seconds; compare against current time in ms
-    return typeof payload.exp === "number" && payload.exp * 1000 > Date.now();
+    if (typeof payload.exp === "number" && payload.exp * 1000 <= Date.now()) {
+      return false;
+    }
+    return true;
   } catch {
     return false;
   }

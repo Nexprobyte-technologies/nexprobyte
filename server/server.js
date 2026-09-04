@@ -1,6 +1,8 @@
+import dotenv from "dotenv";
+dotenv.config(); // ← MUST be first before any route imports read process.env
+
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import { User } from "./models/User.js";
 import { setMongoConnected } from "./store/memoryStore.js";
@@ -12,8 +14,6 @@ import jobRoutes from "./routes/jobRoutes.js";
 import applicationRoutes from "./routes/applicationRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import aboutRoutes from "./routes/aboutRoutes.js";
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;

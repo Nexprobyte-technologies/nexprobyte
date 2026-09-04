@@ -5,7 +5,7 @@ import { verifyToken } from "../middleware/auth.js";
 import { getMongoConnected } from "../store/memoryStore.js";
 
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET || "nexprobyte_secret_key_2026";
+const JWT_SECRET = process.env.JWT_SECRET || "nexprobyte_admin_secret_key_2026";
 
 // Auth Login (POST /api/auth/login)
 router.post("/login", async (req, res) => {

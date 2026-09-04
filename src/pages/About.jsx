@@ -109,16 +109,16 @@ export default function About() {
 
       <section className="section wrap" style={{ paddingTop: 0 }}>
         <div className="about-stats">
-          {STATS.map((s, i) => (
+          {statsList.map((s, i) => (
             <motion.div
-              key={s.label}
+              key={s.label || i}
               className="about-stat"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ duration: 0.6, delay: 0.06 * i, ease: [0.22, 1, 0.36, 1] }}
             >
-              <b>{s.num}</b>
+              <b>{s.value || s.num}</b>
               <span>{s.label}</span>
             </motion.div>
           ))}

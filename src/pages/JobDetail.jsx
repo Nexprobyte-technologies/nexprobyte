@@ -8,11 +8,39 @@ const EASE = [0.22, 1, 0.36, 1];
 
 export default function JobDetail() {
   const { slug } = useParams();
-  const j = JOBS.find((x) => x.slug === slug);
+  const [j, setJ] = React.useState(() => JOBS.find((x) => x.slug === slug));
+  const [loading, setLoading] = React.useState(!j);
+  const [notFound, setNotFound] = React.useState(false);
+  const [more, setMore] = React.useState(() => JOBS.filter((x) => x.slug !== slug).slice(0, 2));
 
-  if (!j) return <Navigate to="/careers" replace />;
+  React.useEffect(() => {
+    fetch(`/api/jobs/${slug}`)
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error("Job not found");
+      })
+      .then((data) => {
+        if (data) setJ(data);
+      })
+      .catch(() => {
+        const fallback = JOBS.find((x) => x.slug === slug);
+        if (fallback) setJ(fallback);
+        else setNotFound(true);
+      })
+      .finally(() => setLoading(false));
 
-  const more = JOBS.filter((x) => x.slug !== slug).slice(0, 2);
+    fetch("/api/jobs")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setMore(data.filter((x) => x.slug !== slug).slice(0, 2));
+        }
+      })
+      .catch((e) => console.error(e));
+  }, [slug]);
+
+  if (notFound && !j) return <Navigate to="/careers" replace />;
+  if (loading || !j) return null;
 
   return (
     <>

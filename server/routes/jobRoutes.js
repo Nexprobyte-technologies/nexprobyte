@@ -18,6 +18,22 @@ router.get("/", async (req, res) => {
   return res.json(memoryStore.jobs);
 });
 
+// Get Single Job by Slug or ID (GET /api/jobs/:idOrSlug - Public)
+router.get("/:idOrSlug", async (req, res) => {
+  const { idOrSlug } = req.params;
+  if (getMongoConnected()) {
+    try {
+      const doc = await Job.findOne({ $or: [{ slug: idOrSlug }, { _id: idOrSlug }] });
+      if (doc) return res.json(doc);
+    } catch (e) {
+      console.error("Fetch single job error from Mongo:", e);
+    }
+  }
+  const job = memoryStore.jobs.find((j) => j.slug === idOrSlug || j._id === idOrSlug || j.id === idOrSlug);
+  if (job) return res.json(job);
+  return res.status(404).json({ message: "Job not found." });
+});
+
 // Create Job (POST /api/jobs - Admin Protected)
 router.post("/", verifyToken, async (req, res) => {
   const { title, dept, location, type, salary, excerpt, responsibilities, requirements, palette } = req.body;
