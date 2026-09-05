@@ -1,6 +1,6 @@
 # NEXPROBYTE — Digital Solutions Portal & Admin CRM System
 
-Official full-stack web application for **Nexprobyte Technologies**, a Coimbatore-based digital solutions agency. Includes a high-performance React public website and a comprehensive Paces CRM Luxe Admin Portal powered by a Node.js + Express REST API with MongoDB (plus automatic memory fallback storage).
+Official full-stack web application for **Nexprobyte Technologies**, a Coimbatore-based digital solutions agency. Includes a high-performance React public website and a comprehensive **Paces CRM Luxe Admin Portal** powered by Node.js + Express REST API with MongoDB (plus automatic memory fallback storage).
 
 ---
 
@@ -10,12 +10,12 @@ Official full-stack web application for **Nexprobyte Technologies**, a Coimbator
 | --- | --- | --- |
 | **Frontend** | Framework | React 18 + Vite |
 | | Routing | React Router v7 |
-| | Animation | Framer Motion (`motion/react`) + GSAP + ScrollTrigger |
-| | Styling | Custom CSS (`styles.css`, `styles-pages.css`, `admin-styles.css`) |
+| | Animation | Framer Motion (motion/react) + GSAP + ScrollTrigger |
+| | Styling | Custom CSS (styles.css, styles-pages.css, admin-styles.css) |
 | **Backend** | Runtime | Node.js + Express |
 | | Database | MongoDB + Mongoose (with active Memory Fallback Store) |
 | | Auth | JSON Web Token (JWT) + bcryptjs |
-| | Environment | `dotenv`, `cors`, `body-parser` (25MB payload limit for PDF uploads) |
+| | Environment | dotenv, cors, body-parser (25MB payload limit for PDF uploads) |
 
 ---
 
@@ -24,215 +24,203 @@ Official full-stack web application for **Nexprobyte Technologies**, a Coimbator
 ### Prerequisites
 - **Node.js** (v18.0.0 or higher)
 - **npm** (v9.0.0 or higher)
-- **MongoDB** (Optional: If MongoDB is running at `mongodb://127.0.0.1:27017/nexprobyte`, the server connects automatically. If MongoDB is offline, the backend automatically uses the built-in **Memory Fallback Store** so all features work seamlessly without failing).
+- **MongoDB** *(Optional)* — If MongoDB is running at mongodb://127.0.0.1:27017/nexprobyte, the server connects automatically. If offline, the backend uses the built-in **Memory Fallback Store** so all features work seamlessly.
 
 ---
 
 ### Step 1: Install Dependencies
-```bash
+`ash
 npm install
-```
-
----
+`
 
 ### Step 2: Configure Environment Variables
-A `.env` file is located in the root directory:
-```env
+A .env file is located in the root directory:
+`nv
 PORT=5000
 MONGO_URI=mongodb://127.0.0.1:27017/nexprobyte
 JWT_SECRET=nexprobyte_secret_key_2026
-```
-
----
+`
 
 ### Step 3: Run the Application
 
-You will run the **Backend Server (Node.js)** and **Frontend App (React.js)** in two separate terminal windows:
-
-#### 🟢 Terminal 1: Start Backend Node.js Server
-```bash
+#### 🟢 Terminal 1 — Start Backend Node.js Server
+`ash
 npm run server
-```
-- Server starts at: **`http://localhost:5000`**
-- Connects to MongoDB or initializes Memory Store.
-- Exposes REST API endpoints (`/api/auth`, `/api/jobs`, `/api/applications`, `/api/inquiries`, `/api/posts`, `/api/about`).
+`
+- Server starts at: **http://localhost:5000**
+- Exposes REST API: /api/auth, /api/employees, /api/attendance, /api/leaves, /api/work-reports, /api/projects, /api/jobs, /api/applications, /api/inquiries, /api/posts, /api/about, /api/stats
 
-#### 🔵 Terminal 2: Start Frontend React App (Vite)
-```bash
+#### 🔵 Terminal 2 — Start Frontend React App (Vite)
+`ash
 npm run dev
-```
-- Frontend app starts at: **`http://localhost:5173`**
-- Proxies `/api` requests to `http://localhost:5000`.
+`
+- Frontend app starts at: **http://localhost:5173**
+
+### Step 4: Access Admin Panel
+
+| URL | Description |
+|-----|-------------|
+| http://localhost:5173 | Public Website |
+| http://localhost:5173/admin/login | Admin / Employee Login |
+| http://localhost:5173/admin | Super Admin CRM Dashboard |
+| http://localhost:5173/admin/employees | Employee Management |
+| http://localhost:5173/admin/projects | Projects & Deliverables |
+| http://localhost:5173/admin/attendance | Employee Attendance |
+| http://localhost:5173/admin/leaves | Leave Tracker |
+| http://localhost:5173/admin/work-status | Daily Work Status |
+
+**Default Super Admin Login:**
+- **Username**: NexAdmin
+- **Password**: Nex@.1A
 
 ---
 
-### Step 4: Access Admin Panel & Public Website
-- **Public Website**: [http://localhost:5173](http://localhost:5173)
-- **Job Application Page**: [http://localhost:5173/careers/frontend-developer/apply](http://localhost:5173/careers/frontend-developer/apply)
-- **Admin Portal Login**: [http://localhost:5173/admin/login](http://localhost:5173/admin/login)
-  - **Username**: `NexAdmin`
-  - **Password**: `Nex@.1A`
+## 🔐 Dual-Role Login System
+
+Two tabs on the same login page:
+
+### Tab 1 — Super Admin (Status 1)
+- Logs in with Username + Password.
+- Full CRM access: Dashboard, Employees, Projects, Inquiries, Careers, Blogs, About Editor.
+- Creates employee accounts (Email + Password) and sets status (Pending / Confirmed).
+- Only Confirmed employees can log in.
+
+### Tab 2 — Employee (Status 2)
+- Logs in with Email + Password (created by Super Admin).
+- Access to personal Employee Portal: Dashboard, Punch In/Out, Work Status, Leave Tracker, Profile.
 
 ---
 
-## 🔄 End-to-End Code Flow & Architecture
+## 📋 Admin CRM Pages
 
-```
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                           PUBLIC WEBSITE (REACT)                            │
-│  Home (/) • Services (/services) • Blog (/blog) • Careers (/careers/apply)   │
-└──────────────────────────────────────┬──────────────────────────────────────┘
-                                       │ HTTP REST Requests (JSON / Base64)
-                                       ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                          NODE.JS / EXPRESS BACKEND                          │
-│           server/server.js (Port 5000) · CORS · JWT Verification            │
-└───────────────────┬─────────────────────────────────────┬───────────────────┘
-                    │ MongoDB Connected                   │ Offline / Fallback
-                    ▼                                     ▼
-┌──────────────────────────────────────┐ ┌────────────────────────────────────┐
-│         MONGODB DATABASE             │ │       MEMORY FALLBACK STORE        │
-│ User · Job · Application · Inquiry   │ │  In-Memory Objects & Arrays        │
-│ Post · About (Mongoose Schemas)      │ │  (Instant Zero-Downtime Guarantee) │
-└───────────────────┬──────────────────┘ └─────────────────┬──────────────────┘
-                    │                                      │
-                    └──────────────────┬───────────────────┘
-                                       │ JWT Auth Check
-                                       ▼
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                       ADMIN PORTAL (PACES CRM LUXE)                         │
-│  Dashboard (/admin) • Inquiries • Careers & PDFs • Blogs • About Editor     │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+### Dashboard (/admin)
+- Live KPI cards: Total Workforce, Today Punch-ins, Pending Leaves, Work Deliverables, Leads, Active Jobs.
+- Live attendance table for today.
+- Fast shortcut buttons to all major pages.
+
+### Employee Management (/admin/employees)
+- Full employee table with status badge (Pending / Confirmed).
+- Credential Setup: Super Admin creates Email + Password per employee.
+- Inline dropdown view with all details, leave count, login count.
+- Advanced filter panel + Monthly Punch-in & Leave PDF Download.
+
+### Projects & Deliverables (/admin/projects)
+- KPI Cards: Total, In Progress, Completed, Planning counts.
+- Search & Filters by title, client, tech stack, ID, Category, Status, Priority.
+- Table with progress bar, priority badge, quick status dropdown, inline accordion expand.
+- Full Create/Edit modal with employee assignment checkboxes.
+- Pre-seeded with 3 demo projects (PRJ-101, PRJ-102, PRJ-103).
+
+### Inquiries & Leads (/admin/inquiries)
+- View and manage all contact form submissions with status updates.
+
+### Careers & Jobs (/admin/careers)
+- Job listings CRUD + Candidate PDF Resume viewer & downloader.
+
+### Blog Articles (/admin/blogs)
+- Full CRUD + cover image drag-and-drop uploader. Synced live with public /blog page.
+
+### About Editor (/admin/about)
+- Edit company story, mission, stats — live synced with public About page.
 
 ---
 
-## 📁 Project Directory Breakdown
+## 🏢 Employee Portal Pages
 
-```
+### Attendance (/admin/attendance)
+- Punch In / Punch Out with timestamp.
+- Shows only Punch Out button after clocking in (no double punch-in).
+
+### Daily Work Status (/admin/work-status)
+- Upload daily deliverables: project name, task, deliverables URL, notes.
+- Full history table.
+
+### Leave Tracker (/admin/leaves)
+- Apply for leave with type, dates, reason.
+- View history with Pending / Approved / Rejected status.
+- Leave balance summary card.
+
+---
+
+## 🔄 Architecture
+
+`
+PUBLIC WEBSITE (React) — Home, Services, Blog, Careers, Contact
+         |
+         v
+NODE.JS / EXPRESS (Port 5000)
+Routes: auth · employees · attendance · leaves · work-reports · projects
+        jobs · applications · inquiries · posts · about · stats
+         |                              |
+         v                              v
+MONGODB DATABASE              MEMORY FALLBACK STORE
+Employee · Attendance         (Auto-activated when MongoDB offline)
+Leave · WorkReport · Project
+Job · Application · Inquiry · Post · About
+         |
+         v
+ADMIN PORTAL — PACES CRM LUXE
+Super Admin: Dashboard · Employees · Projects · Inquiries · Careers · Blogs · About
+Employee:    Dashboard · Punch In/Out · Work Status · Leaves
+`
+
+---
+
+## 📁 Project Structure
+
+`
 NEXPROBITE/
-├── server/                      # Node.js + Express Backend
-│   ├── config/
-│   │   └── db.js                # MongoDB Mongoose connection handler
+├── server/
+│   ├── config/db.js
+│   ├── middleware/auth.js           # JWT verifyToken
 │   ├── models/
-│   │   ├── User.js              # Admin credentials schema
-│   │   ├── Job.js               # Job listings schema
-│   │   ├── Application.js       # Candidate applications & PDF schema
-│   │   ├── Inquiry.js           # Contact form leads schema
-│   │   ├── Post.js              # Blog articles schema
-│   │   └── About.js             # About page content schema
-│   ├── seed.js                  # Database initial seeder script
-│   └── server.js                # Main Express REST API server (Port 5000)
+│   │   ├── Employee.js · Attendance.js · Leave.js · WorkReport.js · Project.js
+│   │   ├── User.js · Job.js · Application.js · Inquiry.js · Post.js · About.js
+│   ├── routes/
+│   │   ├── authRoutes.js · employeeRoutes.js · attendanceRoutes.js
+│   │   ├── leaveRoutes.js · workReportRoutes.js · projectRoutes.js · statsRoutes.js
+│   │   └── [jobs, applications, inquiries, posts, about]Routes.js
+│   ├── store/memoryStore.js         # In-memory fallback store
+│   └── server.js
 │
-├── src/                         # React Frontend (Vite)
-│   ├── main.jsx                 # Application entry point
-│   ├── App.jsx                  # React Router routes & ProtectedRoute guard
-│   ├── styles.css               # Global theme & cursor styles
-│   ├── styles-pages.css         # Public website page styles
-│   │
-│   ├── admin/                   # Admin Portal (Paces CRM Luxe Theme)
-│   │   ├── admin-styles.css     # Admin Light & Dark theme CSS variables
-│   │   ├── AdminLayout.jsx      # Header, Sidebar, Quick Search, Theme toggle
-│   │   ├── AdminLogin.jsx       # Admin Auth Login (/admin/login)
-│   │   ├── AdminDashboard.jsx   # Metrics, stats, recent leads
-│   │   ├── AdminInquiries.jsx   # Leads management & status updating
-│   │   ├── AdminCareers.jsx     # Job CRUD & Candidate PDF Resume viewer/downloader
-│   │   ├── AdminBlogs.jsx       # Blog post CRUD & Cover image uploader
-│   │   └── AdminAbout.jsx       # About page editor
-│   │
-│   ├── components/              # Public reusable UI components
-│   │   ├── Nav.jsx              # Navbar with logo & dropdowns
-│   │   ├── Footer.jsx           # Footer with logo & links
-│   │   ├── Cursor.jsx           # Custom interactive cursor
-│   │   ├── Nexi.jsx             # AI Chat Assistant (Voice + WhatsApp)
-│   │   ├── PageHero.jsx         # Interior page hero banners
-│   │   ├── Services.jsx         # "What We Do" service cards with hover thumbnails
-│   │   └── Reveal.jsx / CTA.jsx # Scroll animations
-│   │
-│   ├── pages/                   # Public Pages
-│   │   ├── Home.jsx             # Landing page
-│   │   ├── About.jsx            # About page (syncs with backend API)
-│   │   ├── ServicesIndex.jsx    # Services listing
-│   │   ├── ServiceDetail.jsx    # Single service view
-│   │   ├── Blog.jsx             # Blog post list (syncs with backend API)
-│   │   ├── PostDetail.jsx       # Single blog post view
-│   │   ├── Careers.jsx          # Job listings with tech stack icon badges
-│   │   ├── JobDetail.jsx        # Job description view
-│   │   ├── JobApply.jsx         # Candidate Application Form (PDF Upload & Validation)
-│   │   └── Contact.jsx          # Contact inquiry form
-│   │
-│   └── data/
-│       └── content.js           # Initial fallback content data
+├── src/
+│   ├── App.jsx                      # Router + ProtectedRoute + SuperAdminOnlyRoute
+│   ├── admin/
+│   │   ├── AdminLayout.jsx          # Header, Sidebar, Quick Search, App Grid, Theme toggle
+│   │   ├── AdminLogin.jsx           # Dual-tab login (Super Admin + Employee)
+│   │   ├── AdminDashboard.jsx       # Live KPI + workforce table
+│   │   ├── AdminEmployees.jsx       # Employee CRUD, credentials, PDF export
+│   │   ├── AdminProjects.jsx        # Project management with CRUD & filters
+│   │   ├── AdminInquiries.jsx · AdminCareers.jsx · AdminBlogs.jsx · AdminAbout.jsx
+│   │   └── employee/
+│   │       ├── EmpDashboard.jsx · EmpAttendance.jsx · EmpWorkStatus.jsx · EmpLeaves.jsx
+│   ├── components/
+│   │   └── Nav.jsx · Footer.jsx · Cursor.jsx · Nexi.jsx · PageHero.jsx · Services.jsx
+│   ├── pages/
+│   │   └── Home.jsx · About.jsx · ServicesIndex.jsx · ServiceDetail.jsx
+│   │       Blog.jsx · PostDetail.jsx · Careers.jsx · JobDetail.jsx · JobApply.jsx · Contact.jsx
+│   ├── hooks/useSEO.js
+│   └── data/content.js · seo.js
 │
-├── public/                      # Static assets & images
-│   └── assets/                  # Logos and uploaded media assets
-├── .env                         # Environment variables
-├── vite.config.js               # Vite config with API proxy to localhost:5000
-└── package.json                 # Scripts & dependencies
-```
+├── public/robots.txt · sitemap.xml · assets/
+├── .env · vite.config.js · package.json
+`
 
 ---
 
-## 🛠️ Detailed Feature & Code Flow Breakdown
+## 🛠️ Useful Commands
 
-### 1. Candidate Job Application Flow (`/careers/apply` & `/careers/:slug/apply`)
-1. User clicks **"Apply for this role"** on any job card.
-2. `JobApply.jsx` loads available job roles from `GET /api/jobs` and pre-selects the clicked role in the dropdown.
-3. Form performs real-time validations:
-   - **Full Name**: Required (min 2 chars).
-   - **Email**: RFC email regex validation.
-   - **Phone**: Required (min 10 digits).
-   - **Resume PDF**: Validates `.pdf` extension and file size limit (**Max 5MB**). Converts the PDF to Base64 data string via `FileReader`.
-4. Form sends payload to `POST /api/applications`.
-5. Backend (`server/server.js`) saves the record into MongoDB `Application` collection (or `memoryStore.applications`).
-6. Candidate receives instant success card feedback.
-7. Admin can view the submission at `/admin/careers` inside the inline expandable dropdown table row, preview the PDF directly inside an embedded iframe, or click **"⬇️ Download PDF"**.
-
----
-
-### 2. Admin Portal Core Systems (`/admin/*`)
-- **Authentication Guard**: `ProtectedRoute` checks `localStorage.getItem("nex_admin_token")`. Unauthenticated requests are redirected to `/admin/login`.
-- **Header Tools (`AdminLayout.jsx`)**:
-  - **Quick Search**: Real-time popover search indexing Pages, Leads, and Jobs.
-  - **Theme Toggle (☀️ / 🌙)**: Switches between Light and Dark mode using custom CSS variables (`--p-header-bg`, `--p-sidebar-bg`, `--p-content-bg`).
-  - **Apps Grid Menu (⊞)**: Quick shortcuts dropdown.
-  - **Notification Center (🔔)**: Unread badges & notifications.
-  - **Admin Settings (⚙️)**: Change admin profile, password, or reload system cache.
-- **Candidate Applications & Resume PDF (`AdminCareers.jsx`)**:
-  - Tabbed interface between Job Openings and Candidate Applications.
-  - **Inline Dropdown View (`View Details ▾`)**: Expands full candidate profile, experience, links, cover note, and **interactive embedded PDF resume preview + direct download button**.
-- **Blog Article Management (`AdminBlogs.jsx`)**:
-  - Full CRUD operations for blog posts.
-  - **Cover Image Uploader**: Drag & drop or browse image file (JPG, PNG, WEBP, GIF, SVG). Converts file to Base64 data URL for database storage.
-  - **Frontend Connection**: Live articles automatically sync with `src/pages/Blog.jsx` and `src/pages/PostDetail.jsx`.
-
----
-
-## 🔑 Useful Commands
-
-```bash
-# Install dependencies
-npm install
-
-# Start Vite Frontend Dev Server (http://localhost:5173)
-npm run dev
-
-# Start Node.js Backend Server (http://localhost:5000)
-npm run server
-
-# Seed initial database records
-node server/seed.js
-
-# Build production bundle to dist/
-npm run build
-
-# Preview production build
-npm run preview
-```
+`ash
+npm install          # Install dependencies
+npm run dev          # Start Vite Frontend (http://localhost:5173)
+npm run server       # Start Node.js Backend (http://localhost:5000)
+npm run build        # Build production bundle
+npm run preview      # Preview production build
+node server/seed.js  # Seed initial database records
+`
 
 ---
 
 ## 📜 License
 
 Copyright © 2026 **Nexprobyte Technologies**. All rights reserved.
-# nexprobyte
