@@ -468,6 +468,45 @@
   color: var(--muted);
 }
 
+.prose-links {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin-bottom: 32px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.prose-links-title {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.prose-links ul {
+  margin: 0;
+  padding-left: 4px;
+  display: grid;
+  gap: 8px;
+}
+
+.prose-links a {
+  color: var(--white);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.prose-links a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
 /* ================= Careers ================= */
 .lead-p {
   font-size: clamp(16px, 1.5vw, 19px);

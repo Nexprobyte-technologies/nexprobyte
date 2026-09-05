@@ -11,4 +11,21 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    target: "es2018",
+    chunkSizeWarningLimit: 700,
+    cssCodeSplit: true,
+    sourcemap: false,
+    minify: "esbuild",
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ["react", "react-dom", "react-router-dom"],
+          motion: ["motion"],
+          gsap: ["gsap"],
+          ogl: ["ogl"],
+        },
+      },
+    },
+  },
 });

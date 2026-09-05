@@ -101,10 +101,20 @@ export default function DarkVeil({
     const parent = canvas.parentElement;
     if (!parent) return;
 
+    // Detect low-power devices / touch devices and drop resolution for battery life.
+    const isTouch = typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+    const isLowEnd =
+      isTouch ||
+      (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+      (window.deviceMemory && window.deviceMemory <= 4);
+
+    const dprCap = isLowEnd ? 1 : Math.min(window.devicePixelRatio, 2);
+    const rScale = isLowEnd ? Math.min(resolutionScale, 0.6) : resolutionScale;
+
     let renderer;
     try {
       renderer = new Renderer({
-        dpr: Math.min(window.devicePixelRatio, 2),
+        dpr: dprCap,
         canvas
       });
     } catch (e) {
@@ -135,7 +145,7 @@ export default function DarkVeil({
       const w = parent.clientWidth || window.innerWidth,
         h = parent.clientHeight || window.innerHeight;
       if (w > 0 && h > 0) {
-        renderer.setSize(w * resolutionScale, h * resolutionScale);
+        renderer.setSize(w * rScale, h * rScale);
         program.uniforms.uResolution.value.set(w, h);
       }
     };
@@ -145,8 +155,11 @@ export default function DarkVeil({
 
     const start = performance.now();
     let frame = 0;
+    // Pause the shader when the hero scrolls out of view (saves GPU/CPU).
+    let running = true;
 
     const loop = () => {
+      if (!running) return;
       program.uniforms.uTime.value = ((performance.now() - start) / 1000) * speed;
       program.uniforms.uHueShift.value = hueShift;
       program.uniforms.uNoise.value = noiseIntensity;
@@ -158,10 +171,31 @@ export default function DarkVeil({
       frame = requestAnimationFrame(loop);
     };
 
+    let intersector = null;
+    if (typeof IntersectionObserver !== 'undefined') {
+      intersector = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            const shouldRun = entry.isIntersecting && entry.intersectionRatio > 0.02;
+            if (shouldRun && !running) {
+              running = true;
+              loop();
+            } else if (!shouldRun && running) {
+              running = false;
+              cancelAnimationFrame(frame);
+            }
+          });
+        },
+        { threshold: [0, 0.02, 0.5] }
+      );
+      intersector.observe(canvas);
+    }
+
     loop();
 
     return () => {
       cancelAnimationFrame(frame);
+      if (intersector) intersector.disconnect();
       window.removeEventListener('resize', resize);
     };
   }, [hueShift, noiseIntensity, scanlineIntensity, speed, scanlineFrequency, warpAmount, resolutionScale, lightMode]);

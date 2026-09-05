@@ -226,7 +226,7 @@ body.admin-route textarea,
 /* ── Top Header (right-column only) ──────────────────────── */
 .paces-header {
   height: 64px;
-  background: var(--p-header-bg);
+  background: #080c14;
   color: #fff;
   display: flex;
   align-items: center;
@@ -235,10 +235,35 @@ body.admin-route textarea,
   position: sticky;
   top: 0;
   z-index: 300;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
-  border-bottom: 1px solid var(--p-header-border);
+  box-shadow: 0 2px 16px rgba(0,0,0,0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   gap: 16px;
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.paces-header::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+  height: 160px;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(59, 130, 246, 0.55) 0%,
+    rgba(96, 165, 250, 0.25) 35%,
+    transparent 70%
+  );
+  filter: blur(12px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.paces-header > * {
+  position: relative;
+  z-index: 1;
 }
 
 .paces-header-left {

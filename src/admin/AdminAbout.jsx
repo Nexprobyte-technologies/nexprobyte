@@ -201,3 +201,5 @@ export function AdminAbout() {
     </div>
   );
 }
+
+export default AdminAbout;

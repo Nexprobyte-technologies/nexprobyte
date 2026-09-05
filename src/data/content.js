@@ -151,9 +151,25 @@ export const POSTS = [
       {
         p: "Every blog post, product page and service explainer you publish becomes an asset that keeps working — appearing in search results, answering questions and closing sales while you sleep. That's leverage social posts rarely give you.",
       },
+      { h: "Digital marketing starts at your domain" },
+      {
+        p: "Whether you run Google Ads, post on social media or publish content, every digital marketing channel should land on a page you own. A fast-loading website built for conversion is the foundation every Coimbatore business needs before scaling marketing spend.",
+      },
       { h: "The takeaway" },
       {
         p: "You don't need a website because it's trendy. You need one because it's the only channel you fully own. Build it well, keep it fast, and let every other channel feed it.",
+      },
+      {
+        links: [
+          {
+            label: "Google — How to make a website that converts",
+            href: "https://support.google.com/google-ads/answer/7477785",
+          },
+          {
+            label: "WordPress.com — Build a website for your business",
+            href: "https://wordpress.com/go",
+          },
+        ],
       },
     ],
   },
@@ -180,9 +196,29 @@ export const POSTS = [
       {
         p: "A page that answers one question completely beats ten pages that answer it halfway. Structure content with clear headings so both Google and readers understand it instantly.",
       },
+      { h: "Backlinks still decide who wins" },
+      {
+        p: "On-page SEO gets you in the game; backlinks win it. A focused backlink building strategy — earning links from authentic, relevant websites — remains one of the strongest ranking signals Google uses. Quality beats quantity: one link from a trusted industry site is worth more than dozens of low-authority directory links.",
+      },
       { h: "Consistency compounds" },
       {
-        p: "SEO is not a one-month project. Publish useful content monthly, keep technical health in check, and give it time. The businesses that win are simply the ones that kept showing up.",
+        p: "SEO is not a one-month project. Publish useful content monthly, keep technical health in check, and give it time. The businesses that win are simply the ones that kept showing up. For startups and SMEs in Coimbatore, a local SEO strategy combined with steady content publishing tends to outperform expensive one-off campaigns.",
+      },
+      {
+        links: [
+          {
+            label: "Google Search Central — SEO Starter Guide",
+            href: "https://developers.google.com/search/docs/fundamentals/seo-starter-guide",
+          },
+          {
+            label: "Google Best Practices for backlinks",
+            href: "https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links",
+          },
+          {
+            label: "Moz — Beginner's Guide to Link Building",
+            href: "https://moz.com/beginners-guide-to-link-building",
+          },
+        ],
       },
     ],
   },
@@ -228,7 +264,7 @@ export const POSTS = [
     content: [
       { h: "Pick two platforms, not six" },
       {
-        p: "Small teams can't be everywhere. Choose the one or two platforms where your customers actually spend time, commit to them, and go deep instead of spreading thin.",
+        p: "Small teams can't be everywhere. Choose the one or two platforms where your customers actually spend time, commit to them, and go deep instead of spreading thin. Most SMEs in Coimbatore see the strongest returns from a mix of Instagram and LinkedIn.",
       },
       { h: "Content that serves, not just sells" },
       {
@@ -238,9 +274,25 @@ export const POSTS = [
       {
         p: "Set aside one morning a month to create 8–10 pieces of content. Batch creation removes the daily anxiety and gives you a consistent presence without the daily scramble.",
       },
+      { h: "Backlinks and authority belong in the mix" },
+      {
+        p: "Social feeds are rented, but your blog is owned. When you publish genuinely useful articles and earn backlinks from other websites, your social profiles start sending real search traffic too. Every social post should point back to a blog page built to rank for what your customers search in Google.",
+      },
       { h: "Measure the right things" },
       {
         p: "Likes are vanity; conversations and booked enquiries are what matter. Watch what content leads to messages and calls, then make more of that.",
+      },
+      {
+        links: [
+          {
+            label: "HubSpot — Social Media Marketing Guide",
+            href: "https://blog.hubspot.com/marketing/social-media-marketing",
+          },
+          {
+            label: "Meta for Business — Getting Started",
+            href: "https://www.facebook.com/business/ads",
+          },
+        ],
       },
     ],
   },
@@ -267,9 +319,21 @@ export const POSTS = [
       {
         p: "Will you interact with the people doing the work, or a salesperson who disappears after the contract is signed? Clear, direct communication is the single best predictor of a good project.",
       },
+      { h: "Local context matters for digital marketing agencies" },
+      {
+        p: "For businesses in India, an agency that understands local search behaviour is a major advantage. A digital marketing agency in Coimbatore that knows how local businesses rank, what Indian audiences click, and how to combine SEO with performance ads will usually beat a generic national firm on cost and results.",
+      },
       { h: "Look at work in your industry" },
       {
         p: "Relevant case studies matter more than impressive portfolios. Past context in your sector means less ramp-up time and fewer expensive lessons.",
+      },
+      {
+        links: [
+          {
+            label: "Google Ads Help — How to choose a digital agency",
+            href: "https://support.google.com/google-ads/answer/7476683",
+          },
+        ],
       },
     ],
   },
@@ -298,7 +362,19 @@ export const POSTS = [
       },
       { h: "The takeaway" },
       {
-        p: "Treat web performance like any other business KPI: set targets, measure them, and expect them to improve. The payoff is straightforward and compounding.",
+        p: "Treat web performance like any other business KPI: set targets, measure them, and expect them to improve. The payoff is straightforward and compounding — and it's the same discipline top digital agencies in Coimbatore apply to every client site they ship.",
+      },
+      {
+        links: [
+          {
+            label: "web.dev — Core Web Vitals explained by Google",
+            href: "https://web.dev/learn-core-web-vitals",
+          },
+          {
+            label: "PageSpeed Insights by Google",
+            href: "https://pagespeed.web.dev/",
+          },
+        ],
       },
     ],
   },

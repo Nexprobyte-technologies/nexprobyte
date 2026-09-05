@@ -343,3 +343,5 @@ export function EmployeeAttendance() {
     </div>
   );
 }
+
+export default EmployeeAttendance;

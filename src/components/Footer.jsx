@@ -34,14 +34,15 @@ export function Footer() {
         <FadeIn>
           <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
             <img
-              src="/assets/nxt2.jpg.jpeg"
+              src="/images/nxtpro-logo.png"
               alt="Nexprobyte Logo"
-              style={{ height: "48px", width: "auto", borderRadius: "8px", objectFit: "contain" }}
+              style={{ height: "48px", width: "auto", objectFit: "contain" }}
             />
           </div>
           <p className="f-desc">
-            Nexprobyte Technologies is a digital solutions company helping businesses grow with
-            technology, design and marketing.
+            Nexprobyte Technologies is a digital marketing agency and software development company in
+            Coimbatore. We help startups and SMEs grow with website development, SEO, social media
+            marketing and AI-powered automation.
           </p>
           <div className="socials">
             {SOCIALS.map((s) => (
@@ -103,6 +104,24 @@ export function Footer() {
             </li>
           </ul>
         </FadeIn>
+      </div>
+
+      {/* Center Emblem with White Background over the Divider Line */}
+      <div className="footer-divider-badge-wrap">
+        <a
+          href="https://en.wikipedia.org/wiki/Coimbatore"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer-divider-badge"
+          title="Explore Coimbatore on Wikipedia"
+          aria-label="Coimbatore Wikipedia"
+        >
+          <img
+            src="/assets/cropped-cbe-blue-logo-5.png"
+            alt="Coimbatore Emblem"
+            className="footer-center-emblem"
+          />
+        </a>
       </div>
 
       <div className="base">

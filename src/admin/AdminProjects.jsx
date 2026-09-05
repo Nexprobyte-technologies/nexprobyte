@@ -1464,3 +1464,5 @@ export function AdminProjects() {
     </div>
   );
 }
+
+export default AdminProjects;

@@ -735,3 +735,5 @@ export function AdminBlogs() {
     </div>
   );
 }
+
+export default AdminBlogs;

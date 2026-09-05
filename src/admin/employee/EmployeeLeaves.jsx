@@ -360,3 +360,5 @@ export function EmployeeLeaves() {
     </div>
   );
 }
+
+export default EmployeeLeaves;

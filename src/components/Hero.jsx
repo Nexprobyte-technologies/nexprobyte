@@ -55,8 +55,9 @@ export function Hero() {
 
         <div className="hero-sub">
           <p style={{ maxWidth: "58ch" }}>
-            Nexprobyte Technologies is a digital solutions company helping startups and SMEs build a
-            strong online presence through technology, design and marketing.
+            Nexprobyte Technologies is a digital marketing agency and software development company in
+            Coimbatore — helping startups and SMEs grow with web development, SEO, performance ads and
+            AI automation.
           </p>
           <div className="hero-cta">
             <a href="#contact" className="btn btn-solid">

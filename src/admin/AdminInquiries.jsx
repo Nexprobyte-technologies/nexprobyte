@@ -253,3 +253,5 @@ export function AdminInquiries() {
     </div>
   );
 }
+
+export default AdminInquiries;

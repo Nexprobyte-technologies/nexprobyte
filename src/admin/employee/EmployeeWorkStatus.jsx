@@ -459,3 +459,5 @@ export function EmployeeWorkStatus() {
     </div>
   );
 }
+
+export default EmployeeWorkStatus;

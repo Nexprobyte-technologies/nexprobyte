@@ -726,3 +726,5 @@ export function EmployeeDashboard() {
     </div>
   );
 }
+
+export default EmployeeDashboard;

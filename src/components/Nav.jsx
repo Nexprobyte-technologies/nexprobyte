@@ -2,30 +2,86 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
-const LINKS = [
+const NAV_ITEMS = [
   { label: "Home", to: "/", ord: "01" },
   { label: "About", to: "/about", ord: "02" },
-  { label: "Services", to: "/services", ord: "03" },
   {
-    label: "Our Product",
-    ord: "04",
-    product: true,
-    sub: [
-      { label: "GO Drive", href: "#" },
-      { label: "Download Android App", href: "#" },
-      { label: "Visit Site", href: "#" },
+    id: "services-products",
+    label: "What We Do",
+    ord: "03",
+    isDropdown: true,
+    activePrefixes: ["/services"],
+    sections: [
+      {
+        title: "Services",
+        items: [
+          { label: "All Services", to: "/services", icon: "⚡" },
+          { label: "Website Development", to: "/services/website-development", icon: "🌐" },
+          { label: "Application Development", to: "/services/application-development", icon: "📱" },
+          { label: "Digital Marketing & SEO", to: "/services/digital-marketing", icon: "🚀" },
+        ],
+      },
+      {
+        title: "Our Products",
+        items: [
+          { label: "GO Drive", href: "#", icon: "💾", isExternal: true },
+          { label: "Download Android App", href: "#", icon: "📲", isExternal: true },
+          { label: "Visit Site", href: "#", icon: "🔗", isExternal: true },
+        ],
+      },
     ],
   },
-  { label: "Careers", to: "/careers", ord: "05" },
-  { label: "Blog", to: "/blog", ord: "06" },
-  { label: "Contact", to: "/contact", ord: "07" },
+  {
+    id: "careers-blog",
+    label: "Resources",
+    ord: "04",
+    isDropdown: true,
+    activePrefixes: ["/careers", "/blog"],
+    sections: [
+      {
+        title: "Careers",
+        items: [
+          {
+            label: "Explore Opportunities",
+            to: "/careers",
+            icon: "💼",
+            subtext: "Open tech roles & engineering positions",
+          },
+          {
+            label: "Apply for a Role",
+            to: "/careers",
+            icon: "🚀",
+            subtext: "Join our Coimbatore digital team",
+          },
+        ],
+      },
+      {
+        title: "Blog & Insights",
+        items: [
+          {
+            label: "Tech & Case Studies",
+            to: "/blog",
+            icon: "📰",
+            subtext: "Articles, insights & industry stories",
+          },
+          {
+            label: "Digital Trends",
+            to: "/blog",
+            icon: "💡",
+            subtext: "SEO, AI & Modern Web Development",
+          },
+        ],
+      },
+    ],
+  },
+  { label: "Contact", to: "/contact", ord: "05" },
 ];
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [productOpen, setProductOpen] = useState(false);
-  const [mobileProductOpen, setMobileProductOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const [mobileExpanded, setMobileExpanded] = useState({});
   const location = useLocation();
 
   useEffect(() => {
@@ -54,10 +110,18 @@ export function Nav() {
     };
   }, [open]);
 
-  // Close mobile menu on route changes
+  // Close mobile menu & dropdowns on route changes
   useEffect(() => {
     setOpen(false);
+    setActiveDropdown(null);
   }, [location.pathname]);
+
+  const toggleMobileGroup = (id) => {
+    setMobileExpanded((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
 
   return (
     <>
@@ -70,7 +134,7 @@ export function Nav() {
           >
             <Link to="/" className="logo" onClick={() => setOpen(false)}>
               <img
-                src="/assets/nxtpro.jpg.jpeg"
+                src="/images/nxtpro-logo.png"
                 alt="Nexprobyte"
                 className="logo-img"
               />
@@ -79,43 +143,99 @@ export function Nav() {
 
           {/* Desktop Navigation */}
           <nav className="nav-links" aria-label="Main">
-            {LINKS.map((l, i) =>
-              l.product ? (
+            {NAV_ITEMS.map((item, i) =>
+              item.isDropdown ? (
                 <motion.span
-                  key={l.label}
+                  key={item.id}
                   initial={{ opacity: 0, y: -16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.05 * i + 0.1, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <div
-                    className={`nav-product ${productOpen ? "is-open" : ""}`}
-                    onClick={() => setProductOpen((v) => !v)}
-                    onMouseEnter={() => setProductOpen(true)}
-                    onMouseLeave={() => setProductOpen(false)}
+                    className={`nav-dropdown-wrapper ${activeDropdown === item.id ? "is-open" : ""}`}
+                    onMouseEnter={() => setActiveDropdown(item.id)}
+                    onMouseLeave={() => setActiveDropdown(null)}
                   >
-                    <button className="nav-link" aria-expanded={productOpen} type="button">
-                      {l.label}
+                    <button
+                      className={`nav-link nav-dropdown-btn ${
+                        item.activePrefixes?.some((p) => location.pathname.startsWith(p))
+                          ? "is-active"
+                          : ""
+                      }`}
+                      aria-expanded={activeDropdown === item.id}
+                      type="button"
+                      onClick={() =>
+                        setActiveDropdown((curr) => (curr === item.id ? null : item.id))
+                      }
+                    >
+                      {item.label}
+                      <span className={`nav-caret ${activeDropdown === item.id ? "is-open" : ""}`}>
+                        ▼
+                      </span>
                     </button>
 
                     <AnimatePresence>
-                      {productOpen && (
+                      {activeDropdown === item.id && (
                         <motion.div
-                          className="nav-dropdown"
+                          className={`nav-dropdown ${
+                            item.sections.length > 1 ? "nav-dropdown--wide" : ""
+                          }`}
                           initial={{ opacity: 0, y: 10, scale: 0.98 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 8, scale: 0.98 }}
                           transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
                         >
-                          {l.sub.map((s) => (
-                            <a
-                              key={s.label}
-                              href={s.href}
-                              className="nav-dropdown-link"
-                              onClick={() => setProductOpen(false)}
-                            >
-                              <span>{s.label}</span>
-                              <span className="arr">→</span>
-                            </a>
+                          {item.sections.map((sec, sIdx) => (
+                            <div key={sec.title || sIdx} className="nav-dropdown-section">
+                              {sec.title && (
+                                <div className="nav-dropdown-section-title">{sec.title}</div>
+                              )}
+                              <div className="nav-dropdown-items-group">
+                                {sec.items.map((sub) =>
+                                  sub.isExternal ? (
+                                    <a
+                                      key={sub.label}
+                                      href={sub.href}
+                                      className="nav-dropdown-link"
+                                      onClick={() => setActiveDropdown(null)}
+                                    >
+                                      <div className="nav-dropdown-link-left">
+                                        <span className="nav-dropdown-icon">{sub.icon}</span>
+                                        <div>
+                                          <span className="nav-dropdown-label">{sub.label}</span>
+                                          {sub.subtext && (
+                                            <span className="nav-dropdown-subtext">
+                                              {sub.subtext}
+                                            </span>
+                                          )}
+                                        </div>
+                                      </div>
+                                      <span className="arr">→</span>
+                                    </a>
+                                  ) : (
+                                    <Link
+                                      key={sub.label}
+                                      to={sub.to}
+                                      className="nav-dropdown-link"
+                                      onClick={() => setActiveDropdown(null)}
+                                    >
+                                      <div className="nav-dropdown-link-left">
+                                        <span className="nav-dropdown-icon">{sub.icon}</span>
+                                        <div>
+                                          <span className="nav-dropdown-label">{sub.label}</span>
+                                          {sub.subtext && (
+                                            <span className="nav-dropdown-subtext">
+                                              {sub.subtext}
+                                            </span>
+                                          )}
+                                        </div>
+                                      </div>
+                                      <span className="arr">→</span>
+                                    </Link>
+                                  )
+                                )}
+                              </div>
+                            </div>
                           ))}
                         </motion.div>
                       )}
@@ -124,16 +244,16 @@ export function Nav() {
                 </motion.span>
               ) : (
                 <motion.span
-                  key={l.to}
+                  key={item.to}
                   initial={{ opacity: 0, y: -16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.05 * i + 0.1, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <NavLink
-                    to={l.to}
+                    to={item.to}
                     className={({ isActive }) => `nav-link ${isActive ? "is-active" : ""}`}
                   >
-                    {l.label}
+                    {item.label}
                   </NavLink>
                 </motion.span>
               )
@@ -182,7 +302,7 @@ export function Nav() {
               <div className="mobile-menu-head">
                 <Link to="/" className="logo" onClick={() => setOpen(false)}>
                   <img
-                    src="/assets/nxtpro.jpg.jpeg"
+                    src="/images/nxtpro-logo.png"
                     alt="Nexprobyte"
                     className="logo-img"
                   />
@@ -201,32 +321,34 @@ export function Nav() {
               {/* Mobile Scrollable Menu Links */}
               <div className="mobile-menu-body">
                 <nav className="mobile-nav-list">
-                  {LINKS.map((l, i) => (
+                  {NAV_ITEMS.map((item, i) => (
                     <motion.div
-                      key={l.label}
+                      key={item.label}
                       className="mobile-nav-item"
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.08 + i * 0.04, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                     >
-                      {l.product ? (
+                      {item.isDropdown ? (
                         <div className="mobile-product-group">
                           <button
                             type="button"
                             className="mobile-link mobile-product-btn"
-                            onClick={() => setMobileProductOpen((prev) => !prev)}
+                            onClick={() => toggleMobileGroup(item.id)}
                           >
                             <span>
-                              <span className="ord">{l.ord}</span>
-                              {l.label}
+                              <span className="ord">{item.ord}</span>
+                              {item.label}
                             </span>
-                            <span className={`mobile-caret ${mobileProductOpen ? "is-open" : ""}`}>
-                              {mobileProductOpen ? "−" : "+"}
+                            <span
+                              className={`mobile-caret ${mobileExpanded[item.id] ? "is-open" : ""}`}
+                            >
+                              {mobileExpanded[item.id] ? "−" : "+"}
                             </span>
                           </button>
 
                           <AnimatePresence>
-                            {mobileProductOpen && (
+                            {mobileExpanded[item.id] && (
                               <motion.div
                                 className="mobile-sub"
                                 initial={{ opacity: 0, height: 0 }}
@@ -234,16 +356,48 @@ export function Nav() {
                                 exit={{ opacity: 0, height: 0 }}
                                 transition={{ duration: 0.25 }}
                               >
-                                {l.sub.map((s) => (
-                                  <a
-                                    key={s.label}
-                                    href={s.href}
-                                    className="mobile-sub-link"
-                                    onClick={() => setOpen(false)}
-                                  >
-                                    <span>{s.label}</span>
-                                    <span className="arr">→</span>
-                                  </a>
+                                {item.sections.map((sec, sIdx) => (
+                                  <div key={sec.title || sIdx} style={{ marginBottom: 12 }}>
+                                    {sec.title && (
+                                      <div
+                                        style={{
+                                          fontSize: 11,
+                                          fontWeight: 700,
+                                          letterSpacing: "0.08em",
+                                          textTransform: "uppercase",
+                                          color: "var(--accent)",
+                                          marginBottom: 6,
+                                        }}
+                                      >
+                                        {sec.title}
+                                      </div>
+                                    )}
+                                    {sec.items.map((sub) =>
+                                      sub.isExternal ? (
+                                        <a
+                                          key={sub.label}
+                                          href={sub.href}
+                                          className="mobile-sub-link"
+                                          onClick={() => setOpen(false)}
+                                        >
+                                          <span style={{ marginRight: 6 }}>{sub.icon}</span>
+                                          <span>{sub.label}</span>
+                                          <span className="arr">→</span>
+                                        </a>
+                                      ) : (
+                                        <Link
+                                          key={sub.label}
+                                          to={sub.to}
+                                          className="mobile-sub-link"
+                                          onClick={() => setOpen(false)}
+                                        >
+                                          <span style={{ marginRight: 6 }}>{sub.icon}</span>
+                                          <span>{sub.label}</span>
+                                          <span className="arr">→</span>
+                                        </Link>
+                                      )
+                                    )}
+                                  </div>
                                 ))}
                               </motion.div>
                             )}
@@ -251,14 +405,14 @@ export function Nav() {
                         </div>
                       ) : (
                         <NavLink
-                          to={l.to}
+                          to={item.to}
                           className={({ isActive }) =>
                             `mobile-link ${isActive ? "is-active" : ""}`
                           }
                           onClick={() => setOpen(false)}
                         >
-                          <span className="ord">{l.ord}</span>
-                          {l.label}
+                          <span className="ord">{item.ord}</span>
+                          {item.label}
                         </NavLink>
                       )}
                     </motion.div>

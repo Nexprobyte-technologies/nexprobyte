@@ -1978,3 +1978,5 @@ export function AdminEmployees() {
     </div>
   );
 }
+
+export default AdminEmployees;

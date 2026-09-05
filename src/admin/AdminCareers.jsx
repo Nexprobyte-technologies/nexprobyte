@@ -868,3 +868,5 @@ export function AdminCareers() {
     </div>
   );
 }
+
+export default AdminCareers;

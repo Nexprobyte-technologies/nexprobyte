@@ -127,6 +127,29 @@ export function Prose({ content, delay = 0 }) {
             </motion.ul>
           );
         }
+        if (block.links) {
+          return (
+            <motion.div
+              key={i}
+              className="prose-links"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.6, delay: d, ease: EASE }}
+            >
+              <span className="prose-links-title">Recommended resources</span>
+              <ul>
+                {block.links.map((l, j) => (
+                  <li key={j}>
+                    <a href={l.href} target="_blank" rel="noopener noreferrer">
+                      {l.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          );
+        }
         return null;
       })}
     </div>
