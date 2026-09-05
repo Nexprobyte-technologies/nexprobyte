@@ -3,12 +3,21 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { motion } from "motion/react";
 import { PageHero, Breadcrumb } from "../components/PageHero.jsx";
 import { SERVICES } from "../data/content.js";
+import { useSEO } from "../hooks/useSEO.js";
 
 const EASE = [0.22, 1, 0.36, 1];
 
 export default function ServiceDetail() {
   const { slug } = useParams();
   const s = SERVICES.find((x) => x.slug === slug);
+
+  useSEO({
+    title: s
+      ? `${s.title} Coimbatore — Nexprobyte Technologies | Digital Agency`
+      : undefined,
+    description: s?.blurb,
+    keywords: `${s?.title || "software"} Coimbatore, ${s?.title || "digital marketing"} services, software company Coimbatore`,
+  });
 
   if (!s) return <Navigate to="/services" replace />;
 

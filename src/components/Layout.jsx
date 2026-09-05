@@ -6,6 +6,7 @@ import { Footer } from "./Footer.jsx";
 import { Nexi } from "./Nexi.jsx";
 import { Cursor } from "./Cursor.jsx";
 import { GSAPScrollEngine } from "../hooks/useGSAPScroll.jsx";
+import { useSEO } from "../hooks/useSEO.js";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -19,6 +20,7 @@ function ScrollToTop() {
 
 export function Layout() {
   const { pathname } = useLocation();
+  useSEO();
 
   return (
     <>

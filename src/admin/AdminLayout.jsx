@@ -4,6 +4,11 @@ import "./admin-styles.css";
 
 const STATIC_PAGES = [
   { title: "CRM Dashboard", category: "Pages", icon: "📊", path: "/admin", sub: "Overview & key metrics" },
+  { title: "All Employee Details", category: "Management", icon: "👥", path: "/admin/employees", sub: "Manage employees, statuses & login credentials" },
+  { title: "Projects & Deliverables", category: "Management", icon: "🚀", path: "/admin/projects", sub: "Create & track client project records, tech stack & assignments" },
+  { title: "My Attendance", category: "Employee", icon: "⏱️", path: "/admin/attendance", sub: "Punch in/out & attendance tracking" },
+  { title: "Daily Work Status", category: "Employee", icon: "📝", path: "/admin/work-status", sub: "Upload daily project deliverables" },
+  { title: "Leave Tracker", category: "Employee", icon: "🌴", path: "/admin/leaves", sub: "Leave balances & applications" },
   { title: "Inquiries & Leads", category: "Pages", icon: "💬", path: "/admin/inquiries", sub: "Manage customer leads & contact messages" },
   { title: "Careers & Recruitment", category: "Pages", icon: "💼", path: "/admin/careers", sub: "Post jobs & review applications" },
   { title: "Blog Articles & Insights", category: "Pages", icon: "📰", path: "/admin/blogs", sub: "Manage and publish blog posts" },
@@ -223,7 +228,14 @@ export function AdminLayout() {
     setTimeout(() => window.location.reload(), 800);
   };
 
-  const initials = (adminUser?.username || "N")[0].toUpperCase();
+  const isEmployee = adminUser?.role === "employee";
+  const displayName = isEmployee
+    ? adminUser?.name || "Employee"
+    : adminUser?.name || adminUser?.username || "NexAdmin";
+  const displayRole = isEmployee
+    ? `${adminUser?.empId || "ID"} • ${adminUser?.designation || "Employee"}`
+    : "Super Admin (Status 1)";
+  const initials = (displayName || "N")[0].toUpperCase();
 
   return (
     <div className={`paces-admin-root ${isDark ? "dark-theme" : ""}`}>
@@ -238,39 +250,73 @@ export function AdminLayout() {
             <div className="paces-sidebar-profile-inner">
               <div className="paces-sidebar-avatar">{initials}</div>
               <div>
-                <div className="paces-sidebar-name">{adminUser?.username || "NexAdmin"}</div>
-                <div className="paces-sidebar-role">Creative Director</div>
+                <div className="paces-sidebar-name">{displayName}</div>
+                <div className="paces-sidebar-role">{displayRole}</div>
               </div>
             </div>
           </div>
 
-          <div className="paces-nav-section">
-            <div className="paces-nav-section-label">Main</div>
-            <NavLink to="/admin" end className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
-              <span className="paces-nav-icon">📊</span>
-              CRM Dashboard
-            </NavLink>
-          </div>
+          {isEmployee ? (
+            /* ── Employee Portal Navigation ── */
+            <div className="paces-nav-section">
+              <div className="paces-nav-section-label">Employee Portal</div>
+              <NavLink to="/admin" end className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
+                <span className="paces-nav-icon">📊</span>
+                My Dashboard
+              </NavLink>
+              <NavLink to="/admin/attendance" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
+                <span className="paces-nav-icon">⏱️</span>
+                My Attendance
+              </NavLink>
+              <NavLink to="/admin/work-status" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
+                <span className="paces-nav-icon">📝</span>
+                Daily Work Status
+              </NavLink>
+              <NavLink to="/admin/leaves" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
+                <span className="paces-nav-icon">🌴</span>
+                Leave Tracker
+              </NavLink>
+            </div>
+          ) : (
+            /* ── Super Admin Navigation ── */
+            <>
+              <div className="paces-nav-section">
+                <div className="paces-nav-section-label">Main</div>
+                <NavLink to="/admin" end className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
+                  <span className="paces-nav-icon">📊</span>
+                  CRM Dashboard
+                </NavLink>
+                <NavLink to="/admin/employees" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
+                  <span className="paces-nav-icon">👥</span>
+                  All Employees
+                </NavLink>
+                <NavLink to="/admin/projects" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
+                  <span className="paces-nav-icon">🚀</span>
+                  Projects &amp; Deliverables
+                </NavLink>
+              </div>
 
-          <div className="paces-nav-section">
-            <div className="paces-nav-section-label">Management</div>
-            <NavLink to="/admin/inquiries" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
-              <span className="paces-nav-icon">💬</span>
-              Inquiries &amp; Leads
-            </NavLink>
-            <NavLink to="/admin/careers" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
-              <span className="paces-nav-icon">💼</span>
-              Careers &amp; Jobs
-            </NavLink>
-            <NavLink to="/admin/blogs" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
-              <span className="paces-nav-icon">📰</span>
-              Blog Articles
-            </NavLink>
-            <NavLink to="/admin/about" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
-              <span className="paces-nav-icon">✏️</span>
-              About Editor
-            </NavLink>
-          </div>
+              <div className="paces-nav-section">
+                <div className="paces-nav-section-label">Management</div>
+                <NavLink to="/admin/inquiries" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
+                  <span className="paces-nav-icon">💬</span>
+                  Inquiries &amp; Leads
+                </NavLink>
+                <NavLink to="/admin/careers" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
+                  <span className="paces-nav-icon">💼</span>
+                  Careers &amp; Jobs
+                </NavLink>
+                <NavLink to="/admin/blogs" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
+                  <span className="paces-nav-icon">📰</span>
+                  Blog Articles
+                </NavLink>
+                <NavLink to="/admin/about" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
+                  <span className="paces-nav-icon">✏️</span>
+                  About Editor
+                </NavLink>
+              </div>
+            </>
+          )}
 
           <div className="paces-sidebar-footer">
             <div className="paces-nav-section-label" style={{ paddingTop: 12 }}>System</div>
@@ -438,22 +484,49 @@ export function AdminLayout() {
                       <div className="paces-app-tile-icon">📊</div>
                       <div className="paces-app-tile-title">Dashboard</div>
                     </Link>
-                    <Link to="/admin/inquiries" className="paces-app-tile" onClick={() => setShowApps(false)}>
-                      <div className="paces-app-tile-icon">💬</div>
-                      <div className="paces-app-tile-title">Inquiries</div>
-                    </Link>
-                    <Link to="/admin/careers" className="paces-app-tile" onClick={() => setShowApps(false)}>
-                      <div className="paces-app-tile-icon">💼</div>
-                      <div className="paces-app-tile-title">Careers</div>
-                    </Link>
-                    <Link to="/admin/blogs" className="paces-app-tile" onClick={() => setShowApps(false)}>
-                      <div className="paces-app-tile-icon">📰</div>
-                      <div className="paces-app-tile-title">Blogs</div>
-                    </Link>
-                    <Link to="/admin/about" className="paces-app-tile" onClick={() => setShowApps(false)}>
-                      <div className="paces-app-tile-icon">✏️</div>
-                      <div className="paces-app-tile-title">About</div>
-                    </Link>
+                    {isEmployee ? (
+                      <>
+                        <Link to="/admin/attendance" className="paces-app-tile" onClick={() => setShowApps(false)}>
+                          <div className="paces-app-tile-icon">⏱️</div>
+                          <div className="paces-app-tile-title">Attendance</div>
+                        </Link>
+                        <Link to="/admin/work-status" className="paces-app-tile" onClick={() => setShowApps(false)}>
+                          <div className="paces-app-tile-icon">📝</div>
+                          <div className="paces-app-tile-title">Work Status</div>
+                        </Link>
+                        <Link to="/admin/leaves" className="paces-app-tile" onClick={() => setShowApps(false)}>
+                          <div className="paces-app-tile-icon">🌴</div>
+                          <div className="paces-app-tile-title">Leaves</div>
+                        </Link>
+                      </>
+                    ) : (
+                      <>
+                        <Link to="/admin/employees" className="paces-app-tile" onClick={() => setShowApps(false)}>
+                          <div className="paces-app-tile-icon">👥</div>
+                          <div className="paces-app-tile-title">Employees</div>
+                        </Link>
+                        <Link to="/admin/projects" className="paces-app-tile" onClick={() => setShowApps(false)}>
+                          <div className="paces-app-tile-icon">🚀</div>
+                          <div className="paces-app-tile-title">Projects</div>
+                        </Link>
+                        <Link to="/admin/inquiries" className="paces-app-tile" onClick={() => setShowApps(false)}>
+                          <div className="paces-app-tile-icon">💬</div>
+                          <div className="paces-app-tile-title">Inquiries</div>
+                        </Link>
+                        <Link to="/admin/careers" className="paces-app-tile" onClick={() => setShowApps(false)}>
+                          <div className="paces-app-tile-icon">💼</div>
+                          <div className="paces-app-tile-title">Careers</div>
+                        </Link>
+                        <Link to="/admin/blogs" className="paces-app-tile" onClick={() => setShowApps(false)}>
+                          <div className="paces-app-tile-icon">📰</div>
+                          <div className="paces-app-tile-title">Blogs</div>
+                        </Link>
+                        <Link to="/admin/about" className="paces-app-tile" onClick={() => setShowApps(false)}>
+                          <div className="paces-app-tile-icon">✏️</div>
+                          <div className="paces-app-tile-title">About</div>
+                        </Link>
+                      </>
+                    )}
                     <a href="/" target="_blank" rel="noreferrer" className="paces-app-tile" onClick={() => setShowApps(false)}>
                       <div className="paces-app-tile-icon">🌐</div>
                       <div className="paces-app-tile-title">Website</div>
@@ -570,8 +643,10 @@ export function AdminLayout() {
               >
                 <div className="paces-user-avatar">{initials}</div>
                 <div className="paces-user-info">
-                  <div className="paces-user-name">{adminUser?.username || "NexAdmin"}</div>
-                  <div className="paces-user-role">Admin Head</div>
+                  <div className="paces-user-name">{displayName}</div>
+                  <div className="paces-user-role">
+                    {isEmployee ? (adminUser?.empId || "Employee") : "Super Admin"}
+                  </div>
                 </div>
               </div>
 
@@ -580,10 +655,10 @@ export function AdminLayout() {
                 <div className="paces-dropdown-panel paces-user-panel">
                   <div className="paces-user-panel-head">
                     <div style={{ fontWeight: 800, fontSize: "13px", color: "var(--p-text-dark)" }}>
-                      {adminUser?.username || "NexAdmin"}
+                      {displayName}
                     </div>
                     <div style={{ fontSize: "11px", color: "var(--p-text-muted)" }}>
-                      {settingsForm.email}
+                      {adminUser?.email || settingsForm.email}
                     </div>
                   </div>
                   <button
@@ -595,9 +670,11 @@ export function AdminLayout() {
                   >
                     <span>⚙️</span> Account Settings
                   </button>
-                  <Link to="/admin/about" className="paces-user-menu-item" onClick={() => setShowUserMenu(false)}>
-                    <span>✏️</span> About Page Editor
-                  </Link>
+                  {!isEmployee && (
+                    <Link to="/admin/about" className="paces-user-menu-item" onClick={() => setShowUserMenu(false)}>
+                      <span>✏️</span> About Page Editor
+                    </Link>
+                  )}
                   <a href="/" target="_blank" rel="noreferrer" className="paces-user-menu-item" onClick={() => setShowUserMenu(false)}>
                     <span>🌐</span> View Live Website
                   </a>

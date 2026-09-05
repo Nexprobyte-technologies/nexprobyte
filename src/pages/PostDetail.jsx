@@ -3,6 +3,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { motion } from "motion/react";
 import { PageHero, Breadcrumb, Prose } from "../components/PageHero.jsx";
 import { POSTS } from "../data/content.js";
+import { useSEO } from "../hooks/useSEO.js";
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -12,6 +13,14 @@ export default function PostDetail() {
   const [morePosts, setMorePosts] = useState(() =>
     POSTS.filter((x) => x.slug !== slug).slice(0, 2)
   );
+
+  useSEO({
+    title: post
+      ? `${post.title} | ${post.category || "Blog"} — Nexprobyte Coimbatore`
+      : undefined,
+    description: post?.excerpt,
+    keywords: `digital marketing Coimbatore, software company blog, SEO insights, web development tips`,
+  });
 
   useEffect(() => {
     fetch(`/api/posts/${slug}`)

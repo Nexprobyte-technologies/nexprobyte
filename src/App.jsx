@@ -16,10 +16,18 @@ import Contact from "./pages/Contact.jsx";
 import { AdminLogin } from "./admin/AdminLogin.jsx";
 import { AdminLayout } from "./admin/AdminLayout.jsx";
 import { AdminDashboard } from "./admin/AdminDashboard.jsx";
+import { AdminEmployees } from "./admin/AdminEmployees.jsx";
 import { AdminCareers } from "./admin/AdminCareers.jsx";
 import { AdminInquiries } from "./admin/AdminInquiries.jsx";
 import { AdminAbout } from "./admin/AdminAbout.jsx";
 import { AdminBlogs } from "./admin/AdminBlogs.jsx";
+import { AdminProjects } from "./admin/AdminProjects.jsx";
+
+// Employee Portal Components
+import { EmployeeDashboard } from "./admin/employee/EmployeeDashboard.jsx";
+import { EmployeeAttendance } from "./admin/employee/EmployeeAttendance.jsx";
+import { EmployeeWorkStatus } from "./admin/employee/EmployeeWorkStatus.jsx";
+import { EmployeeLeaves } from "./admin/employee/EmployeeLeaves.jsx";
 
 function isTokenValid(token) {
   if (!token || typeof token !== "string") return false;
@@ -51,11 +59,31 @@ function ProtectedRoute({ children }) {
   return children;
 }
 
+function SuperAdminOnlyRoute({ children }) {
+  try {
+    const user = JSON.parse(localStorage.getItem("nex_admin_user") || "{}");
+    if (user.role === "employee") {
+      return <Navigate to="/admin" replace />;
+    }
+  } catch (e) {}
+  return children;
+}
+
+function AdminIndex() {
+  try {
+    const user = JSON.parse(localStorage.getItem("nex_admin_user") || "{}");
+    if (user.role === "employee") {
+      return <EmployeeDashboard />;
+    }
+  } catch (e) {}
+  return <AdminDashboard />;
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Admin Portal Routes */}
+        {/* Admin & Employee Portal Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route
           path="/admin"
@@ -65,11 +93,62 @@ export default function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<AdminDashboard />} />
-          <Route path="careers" element={<AdminCareers />} />
-          <Route path="inquiries" element={<AdminInquiries />} />
-          <Route path="blogs" element={<AdminBlogs />} />
-          <Route path="about" element={<AdminAbout />} />
+          <Route index element={<AdminIndex />} />
+
+          {/* Super Admin Management Pages */}
+          <Route
+            path="employees"
+            element={
+              <SuperAdminOnlyRoute>
+                <AdminEmployees />
+              </SuperAdminOnlyRoute>
+            }
+          />
+          <Route
+            path="projects"
+            element={
+              <SuperAdminOnlyRoute>
+                <AdminProjects />
+              </SuperAdminOnlyRoute>
+            }
+          />
+          <Route
+            path="inquiries"
+            element={
+              <SuperAdminOnlyRoute>
+                <AdminInquiries />
+              </SuperAdminOnlyRoute>
+            }
+          />
+          <Route
+            path="careers"
+            element={
+              <SuperAdminOnlyRoute>
+                <AdminCareers />
+              </SuperAdminOnlyRoute>
+            }
+          />
+          <Route
+            path="blogs"
+            element={
+              <SuperAdminOnlyRoute>
+                <AdminBlogs />
+              </SuperAdminOnlyRoute>
+            }
+          />
+          <Route
+            path="about"
+            element={
+              <SuperAdminOnlyRoute>
+                <AdminAbout />
+              </SuperAdminOnlyRoute>
+            }
+          />
+
+          {/* Employee Portal Pages */}
+          <Route path="attendance" element={<EmployeeAttendance />} />
+          <Route path="work-status" element={<EmployeeWorkStatus />} />
+          <Route path="leaves" element={<EmployeeLeaves />} />
         </Route>
 
         {/* Public Website Routes */}

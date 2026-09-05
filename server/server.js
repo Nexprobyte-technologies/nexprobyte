@@ -14,6 +14,11 @@ import jobRoutes from "./routes/jobRoutes.js";
 import applicationRoutes from "./routes/applicationRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import aboutRoutes from "./routes/aboutRoutes.js";
+import employeeRoutes from "./routes/employeeRoutes.js";
+import attendanceRoutes from "./routes/attendanceRoutes.js";
+import workReportRoutes from "./routes/workReportRoutes.js";
+import leaveRoutes from "./routes/leaveRoutes.js";
+import projectRoutes from "./routes/projectRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -31,6 +36,11 @@ app.use("/api/jobs", jobRoutes);
 app.use("/api/applications", applicationRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/about", aboutRoutes);
+app.use("/api/employees", employeeRoutes);
+app.use("/api/attendance", attendanceRoutes);
+app.use("/api/work-reports", workReportRoutes);
+app.use("/api/leaves", leaveRoutes);
+app.use("/api/projects", projectRoutes);
 
 // Root health check endpoint
 app.get("/api/health", (req, res) => {

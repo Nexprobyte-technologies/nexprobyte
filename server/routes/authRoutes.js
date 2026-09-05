@@ -1,48 +1,150 @@
 import express from "express";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User.js";
+import { Employee } from "../models/Employee.js";
 import { verifyToken } from "../middleware/auth.js";
-import { getMongoConnected } from "../store/memoryStore.js";
+import { getMongoConnected, memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || "nexprobyte_admin_secret_key_2026";
 
 // Auth Login (POST /api/auth/login)
 router.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, email, password, loginType } = req.body;
+  const loginIdentifier = (email || username || "").trim().toLowerCase();
 
-  if (!username || !password) {
-    return res.status(400).json({ message: "Username and password are required." });
+  if (!loginIdentifier || !password) {
+    return res.status(400).json({ message: "Login identifier and password are required." });
   }
 
-  // Exact credentials requested by user: NexAdmin / Nex@.1A
-  if (username === "NexAdmin" && password === "Nex@.1A") {
-    const token = jwt.sign({ username: "NexAdmin", role: "admin" }, JWT_SECRET, { expiresIn: "7d" });
+  // ─────────────────────────────────────────────────────────────
+  // 1. Super Admin Credentials Check
+  // ─────────────────────────────────────────────────────────────
+  if (
+    (loginIdentifier === "nexadmin" || loginIdentifier === "admin@nexprobyte.com") &&
+    password === "Nex@.1A"
+  ) {
+    const token = jwt.sign(
+      { username: "NexAdmin", role: "admin", isSuperAdmin: true },
+      JWT_SECRET,
+      { expiresIn: "7d" }
+    );
     return res.json({
       token,
-      user: { username: "NexAdmin", name: "Nexpro Admin", role: "admin" },
+      user: {
+        username: "NexAdmin",
+        name: "Super Admin",
+        email: "admin@nexprobyte.com",
+        role: "admin",
+        isSuperAdmin: true,
+      },
     });
   }
 
-  // Also check MongoDB User model if connected
+  // Check MongoDB User model if connected (for admin roles)
   if (getMongoConnected()) {
     try {
-      const user = await User.findOne({ username });
+      const user = await User.findOne({
+        $or: [{ username: new RegExp(`^${loginIdentifier}$`, "i") }, { email: loginIdentifier }],
+      });
       if (user && user.password === password) {
-        const token = jwt.sign({ id: user._id, username: user.username, role: user.role }, JWT_SECRET, {
-          expiresIn: "7d",
-        });
+        const token = jwt.sign(
+          { id: user._id, username: user.username, role: user.role || "admin" },
+          JWT_SECRET,
+          { expiresIn: "7d" }
+        );
         return res.json({
           token,
-          user: { username: user.username, name: user.name, role: user.role },
+          user: {
+            username: user.username,
+            name: user.name,
+            role: user.role || "admin",
+            isSuperAdmin: user.role === "admin",
+          },
         });
       }
     } catch (e) {
-      console.error("Auth login error:", e);
+      console.error("Auth admin check error:", e);
     }
   }
 
-  return res.status(401).json({ message: "Invalid username or password." });
+  // ─────────────────────────────────────────────────────────────
+  // 2. Employee Login Check (from DB or memoryStore)
+  // ─────────────────────────────────────────────────────────────
+  let employee = null;
+
+  if (getMongoConnected()) {
+    try {
+      employee = await Employee.findOne({
+        $or: [
+          { email: loginIdentifier },
+          { empId: new RegExp(`^${loginIdentifier}$`, "i") },
+        ],
+      });
+    } catch (e) {
+      console.error("Employee DB search error:", e);
+    }
+  }
+
+  // Fallback to memoryStore
+  if (!employee && memoryStore.employees) {
+    employee = memoryStore.employees.find(
+      (emp) =>
+        emp.email.toLowerCase() === loginIdentifier ||
+        (emp.empId && emp.empId.toLowerCase() === loginIdentifier)
+    );
+  }
+
+  if (employee) {
+    // Check Status: Must be "Confirmed"
+    if (employee.status === "Pending") {
+      return res.status(403).json({
+        message:
+          "Your employee status is currently PENDING. Login credentials must be confirmed and set by the Super Admin first.",
+        status: "Pending",
+      });
+    }
+
+    // Verify Password
+    if (!employee.password || employee.password !== password) {
+      return res.status(401).json({ message: "Invalid employee password." });
+    }
+
+    // Generate Employee Token
+    const token = jwt.sign(
+      {
+        id: employee._id || employee.empId,
+        empId: employee.empId,
+        name: employee.name,
+        email: employee.email,
+        role: "employee",
+        department: employee.department,
+        designation: employee.designation,
+      },
+      JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    return res.json({
+      token,
+      user: {
+        id: employee._id || employee.empId,
+        empId: employee.empId,
+        name: employee.name,
+        email: employee.email,
+        phone: employee.phone,
+        department: employee.department,
+        designation: employee.designation,
+        joiningDate: employee.joiningDate,
+        role: "employee",
+        status: employee.status,
+        avatar: employee.avatar,
+        leaveBalance: employee.leaveBalance,
+      },
+    });
+  }
+
+  return res.status(401).json({ message: "Invalid username, email, or password." });
 });
 
 // Verify Auth Token (GET /api/auth/me)
