@@ -8,6 +8,9 @@ import { useSEO } from "../hooks/useSEO.js";
 
 const Nexi = lazy(() => import("./Nexi.jsx").then((m) => ({ default: m.Nexi })));
 const Cursor = lazy(() => import("./Cursor.jsx").then((m) => ({ default: m.Cursor })));
+const CallButton = lazy(() =>
+  import("./CallButton.jsx").then((m) => ({ default: m.CallButton }))
+);
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -43,6 +46,7 @@ function DeferredExtras() {
     <Suspense fallback={null}>
       <GSAPScrollEngine />
       <Nexi />
+      <CallButton />
       <Cursor />
     </Suspense>
   );

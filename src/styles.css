@@ -1868,6 +1868,42 @@ body.admin-route .cursor-ring,
   box-shadow: 0 14px 40px rgba(255, 77, 0, 0.45);
 }
 
+.call-launcher {
+  position: fixed;
+  left: clamp(16px, 3vw, 28px);
+  bottom: clamp(16px, 3vw, 28px);
+  z-index: 9995;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+  background: var(--accent-orange);
+  color: var(--white);
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 14px 40px rgba(243, 98, 5, 0.45);
+}
+
+.call-icon {
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.call-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--accent-orange);
+  z-index: -1;
+  animation: nexiPulse 2.4s ease-out infinite;
+}
+
 .nexi-pulse {
   position: absolute;
   inset: 0;
