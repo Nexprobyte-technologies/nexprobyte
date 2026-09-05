@@ -51,11 +51,23 @@ export const SEO_BY_PATH = {
     keywords:
       "digital marketing company Coimbatore, performance marketing Coimbatore, google ads agency Coimbatore, online marketing Coimbatore",
   },
-  "/services/social-media-marketing": {
-    title: "Social Media Marketing Coimbatore — Brand Growth | Nexprobyte",
+  "/services/mobile-app-development": {
+    title: "Mobile App Development Coimbatore — iOS & Android Apps | Nexprobyte",
     description:
-      "Social media marketing services in Coimbatore. Content strategy, reels, community management and paid social that build your brand.",
-    keywords: "social media marketing Coimbatore, smm agency Coimbatore, instagram marketing Coimbatore",
+      "Custom mobile app development in Coimbatore. Flutter, React Native, iOS & Android application development for startups and enterprises.",
+    keywords: "mobile app development Coimbatore, flutter app developer Coimbatore, ios app development Coimbatore, android app development Coimbatore",
+  },
+  "/services/ui-ux-design": {
+    title: "UI/UX Design Studio Coimbatore — Product & Web Design | Nexprobyte",
+    description:
+      "Human-centric UI/UX design in Coimbatore. User journey mapping, Figma wireframes, interactive prototypes and high-converting design systems.",
+    keywords: "ui ux design Coimbatore, figma designer Coimbatore, website design studio Coimbatore, app ui design Coimbatore",
+  },
+  "/services/branding-identity": {
+    title: "Branding & Identity Agency Coimbatore — Brand Strategy & Logo | Nexprobyte",
+    description:
+      "Strategic branding and visual identity agency in Coimbatore. Logo design, brand guidelines, typography and creative collateral for growing businesses.",
+    keywords: "branding agency Coimbatore, logo design company Coimbatore, corporate identity Coimbatore, creative design Coimbatore",
   },
   "/blog": {
     title: "Blog — Digital Marketing & Web Insights | Nexprobyte Coimbatore",

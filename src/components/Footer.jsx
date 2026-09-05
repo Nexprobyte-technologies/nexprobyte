@@ -12,12 +12,13 @@ const COMPANY = [
 ];
 
 const SERVICES = [
-  "Digital Marketing",
   "Website Development",
-  "Application Development",
   "Mobile App Development",
+  "Application Development",
+  "UI/UX Design",
+  "Branding & Identity",
+  "Digital Marketing & SEO",
   "Social Media Marketing",
-  "SEO Services",
 ];
 
 const SOCIALS = [

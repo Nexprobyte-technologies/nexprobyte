@@ -17,7 +17,10 @@ const NAV_ITEMS = [
         items: [
           { label: "All Services", to: "/services", icon: "⚡" },
           { label: "Website Development", to: "/services/website-development", icon: "🌐" },
-          { label: "Application Development", to: "/services/application-development", icon: "📱" },
+          { label: "Mobile App Development", to: "/services/mobile-app-development", icon: "📱" },
+          { label: "Application Development", to: "/services/application-development", icon: "💻" },
+          { label: "UI/UX Design", to: "/services/ui-ux-design", icon: "🎨" },
+          { label: "Branding & Identity", to: "/services/branding-identity", icon: "✨" },
           { label: "Digital Marketing & SEO", to: "/services/digital-marketing", icon: "🚀" },
         ],
       },

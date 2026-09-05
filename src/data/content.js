@@ -125,6 +125,48 @@ export const SERVICES = [
     ],
     deliverables: ["Brand content kit", "30-day calendars", "Monthly reports", "Growth roadmap"],
   },
+  {
+    slug: "ui-ux-design",
+    num: "07",
+    title: "UI/UX Design",
+    serif: "Human-centric",
+    blurb: "Intuitive, engaging interfaces and seamless experiences designed to convert visitors.",
+    image: "/images/srv-web.jpg",
+    palette: "mint",
+    icon: "↗",
+    overview:
+      "Design isn't just how it looks — it's how it works. We craft intuitive user journeys, wireframes, interactive Figma prototypes, and conversion-focused digital experiences that delight users and drive real business outcomes.",
+    features: [
+      "User Research & Journey Mapping",
+      "Wireframing & Interactive Prototypes (Figma)",
+      "Design Systems & Component Libraries",
+      "Mobile & Web App Interface Design",
+      "Usability Testing & Conversion Rate Optimization",
+      "Design-to-Developer Handoff",
+    ],
+    deliverables: ["Complete Figma Design System", "Interactive Prototype", "User Journey Maps", "Production Asset Kit"],
+  },
+  {
+    slug: "branding-identity",
+    num: "08",
+    title: "Branding & Identity",
+    serif: "Memorable",
+    blurb: "Crafting distinctive brand identities, logos, and visual systems that make your business unforgettable.",
+    image: "/images/srv-marketing.jpg",
+    palette: "fire",
+    icon: "→",
+    overview:
+      "Your brand is your promise. We help startups and established brands build distinctive, memorable visual identities — from logo design and typography to comprehensive brand guideline decks.",
+    features: [
+      "Brand Strategy & Positioning",
+      "Logo Design & Visual Identity Systems",
+      "Typography & Color Palette Guidelines",
+      "Marketing Collateral & Packaging Design",
+      "Social Media Kits & Brand Assets",
+      "Comprehensive Brand Style Guides",
+    ],
+    deliverables: ["Vector Logo Master Files", "Brand Style Guide PDF", "Social Media Asset Kit", "Business Stationery Templates"],
+  },
 ];
 
 export const POSTS = [
