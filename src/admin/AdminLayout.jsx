@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import "./admin-styles.css";
 
 const STATIC_PAGES = [
@@ -26,6 +26,7 @@ const INITIAL_NOTIFICATIONS = [
 
 export function AdminLayout() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [adminUser, setAdminUser] = useState(null);
 
   // Theme state
@@ -37,6 +38,9 @@ export function AdminLayout() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchData, setSearchData] = useState({ inquiries: [], jobs: [] });
+
+  // Mobile drawer state
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Dropdown states
   const [showNotif, setShowNotif] = useState(false);
@@ -85,6 +89,17 @@ export function AdminLayout() {
       setAdminUser({ username: "NexAdmin" });
     }
   }, [navigate]);
+
+  // Close the mobile sidebar drawer whenever the route changes
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, [location.pathname]);
+
+  // Lock body scroll while the mobile drawer is open
+  useEffect(() => {
+    document.body.classList.toggle("paces-drawer-open", sidebarOpen);
+    return () => document.body.classList.remove("paces-drawer-open");
+  }, [sidebarOpen]);
 
   // Fetch search index data (inquiries & jobs)
   useEffect(() => {
@@ -244,8 +259,14 @@ export function AdminLayout() {
 
       {/* ── Body: Sidebar + Right Column (Header + Main) ──── */}
       <div className="paces-body">
+        {/* Mobile drawer backdrop */}
+        <div
+          className={`paces-sidebar-backdrop ${sidebarOpen ? "show" : ""}`}
+          onClick={() => setSidebarOpen(false)}
+        />
+
         {/* ── Sidebar ───────────────────────────────────────── */}
-        <aside className="paces-sidebar">
+        <aside className={`paces-sidebar ${sidebarOpen ? "open" : ""}`}>
           <div className="paces-sidebar-profile">
             <div className="paces-sidebar-profile-inner">
               <div className="paces-sidebar-avatar">{initials}</div>
@@ -349,6 +370,15 @@ export function AdminLayout() {
           <header className="paces-header">
             {/* Left: Quick Search */}
             <div className="paces-header-left" ref={searchRef}>
+              <button
+                className="paces-menu-btn"
+                onClick={() => setSidebarOpen(true)}
+                title="Open Menu"
+                aria-label="Open Menu"
+              >
+                ☰
+              </button>
+
               <div className="paces-search-wrap">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <circle cx="11" cy="11" r="8" />
@@ -462,7 +492,7 @@ export function AdminLayout() {
 
               {/* 2. Apps Grid Button */}
               <button
-                className={`paces-icon-btn ${showApps ? "active" : ""}`}
+                className={`paces-icon-btn pace-apps-btn ${showApps ? "active" : ""}`}
                 onClick={() => {
                   setShowApps(!showApps);
                   setShowNotif(false);
@@ -617,7 +647,7 @@ export function AdminLayout() {
 
               {/* 4. Settings Button */}
               <button
-                className={`paces-icon-btn ${showSettings ? "active" : ""}`}
+                className={`paces-icon-btn pace-settings-btn ${showSettings ? "active" : ""}`}
                 onClick={() => {
                   setShowSettings(true);
                   setShowNotif(false);

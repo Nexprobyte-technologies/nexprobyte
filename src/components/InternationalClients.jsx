@@ -10,6 +10,7 @@ export function InternationalClients() {
             <span className="num">✦</span>
             <span>Global reach</span>
           </span>
+          <hr className="international-divider" />
           <RevealText
             text="We Welcome International Clients"
             as="h2"

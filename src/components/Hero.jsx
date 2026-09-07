@@ -82,6 +82,10 @@ export function Hero() {
             src="/images/hero.jpg"
             alt="Nexprobyte team at work on digital solutions"
             loading="eager"
+            fetchpriority="high"
+            decoding="async"
+            width="1200"
+            height="900"
           />
         </motion.div>
         <span className="tag">Est. Coimbatore</span>

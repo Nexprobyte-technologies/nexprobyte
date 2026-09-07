@@ -130,12 +130,17 @@ export function AdminInquiries() {
                         </div>
                       </div>
                     </td>
-                    <td>
+<td>
                       <span style={{
                         background:"#f1f5f9", color:"#334155",
                         padding:"3px 9px", borderRadius:6,
                         fontSize:12, fontWeight:600,
                       }}>{inq.service}</span>
+                      {inq.organization && (
+                        <div style={{ fontSize:11, color:"#94a3b8", marginTop:4 }}>
+                          {inq.organization}
+                        </div>
+                      )}
                     </td>
                     <td style={{ width: 180, maxWidth: 180 }}>
                       <div
@@ -221,9 +226,13 @@ export function AdminInquiries() {
 
             {/* Fields */}
             <div>
-              <div className="paces-detail-row">
+<div className="paces-detail-row">
                 <div className="paces-detail-key">Requested Service</div>
                 <div className="paces-detail-value">{selectedInquiry.service}</div>
+              </div>
+              <div className="paces-detail-row">
+                <div className="paces-detail-key">Organization</div>
+                <div className="paces-detail-value">{selectedInquiry.organization || "—"}</div>
               </div>
               <div className="paces-detail-row">
                 <div className="paces-detail-key">Received</div>

@@ -35,6 +35,7 @@ async function sendInquiryEmail(inquiry) {
             <tr><td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-weight: bold; width: 140px; color: #475569;">Name:</td><td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #0f172a;">${inquiry.name}</td></tr>
             <tr><td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #475569;">Email:</td><td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #0f172a;"><a href="mailto:${inquiry.email}">${inquiry.email}</a></td></tr>
             <tr><td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #475569;">Phone:</td><td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #0f172a;">${inquiry.phone || "N/A"}</td></tr>
+            <tr><td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #475569;">Organization:</td><td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #0f172a;">${inquiry.organization || "N/A"}</td></tr>
             <tr><td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-weight: bold; color: #475569;">Service:</td><td style="padding: 12px 16px; border-bottom: 1px solid #e2e8f0; color: #0f172a;">${inquiry.service}</td></tr>
             <tr><td style="padding: 12px 16px; font-weight: bold; color: #475569; vertical-align: top;">Message:</td><td style="padding: 12px 16px; color: #0f172a; white-space: pre-line;">${inquiry.message}</td></tr>
           </table>
@@ -52,7 +53,7 @@ async function sendInquiryEmail(inquiry) {
 
 // Submit Contact Inquiry (POST /api/inquiries)
 router.post("/", async (req, res) => {
-  const { name, email, phone, service, message } = req.body;
+  const { name, email, phone, service, organization, message } = req.body;
 
   if (!name || !name.trim()) return res.status(400).json({ message: "Name is required." });
   if (!email || !email.includes("@")) return res.status(400).json({ message: "Valid email is required." });
@@ -64,6 +65,7 @@ router.post("/", async (req, res) => {
     name: name.trim(),
     email: email.trim(),
     phone: phone ? phone.trim() : "",
+    organization: organization || "",
     service: service || "General Inquiry",
     message: message.trim(),
     status: "New",

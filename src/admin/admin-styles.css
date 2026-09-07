@@ -215,6 +215,10 @@ body.admin-route textarea,
   padding: 8px 0;
 }
 
+/* Mobile drawer helpers (hidden on desktop) */
+.paces-menu-btn { display: none; }
+.paces-sidebar-backdrop { display: none; }
+
 /* ── Right Column (header + content) ─────────────────────── */
 .paces-right-col {
   flex: 1;
@@ -1114,3 +1118,212 @@ body.admin-route textarea,
 /* ── Animations ──────────────────────────────────────────── */
 @keyframes paces-fade-in  { from { opacity: 0; } to { opacity: 1; } }
 @keyframes paces-slide-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE / MEDIA QUERIES
+   ══════════════════════════════════════════════════════════ */
+
+/* ── ≤ 1200px: compact desktop ──────────────────────────── */
+@media (max-width: 1200px) {
+  .paces-card { padding: 20px; }
+}
+
+/* ── ≤ 1024px: fixed sidebar becomes an off-canvas drawer ── */
+@media (max-width: 1024px) {
+  .paces-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 18px;
+    flex-shrink: 0;
+    transition: background 0.18s;
+  }
+  .paces-menu-btn:hover { background: rgba(255, 255, 255, 0.16); }
+
+  .paces-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 264px;
+    transform: translateX(-100%);
+    box-shadow: var(--p-shadow-lg);
+    transition: transform 0.28s ease;
+    z-index: 500;
+  }
+  .paces-sidebar.open { transform: translateX(0); }
+
+  .paces-sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 15, 29, 0.55);
+    backdrop-filter: blur(2px);
+    z-index: 490;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .paces-sidebar-backdrop.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  body.paces-drawer-open { overflow: hidden; }
+
+  .paces-header { padding: 0 18px; }
+  .paces-main { padding: 24px 22px; }
+  .paces-page-title { font-size: 20px; }
+}
+
+/* ── ≤ 900px: tablets ───────────────────────────────────── */
+@media (max-width: 900px) {
+  .paces-search-wrap { max-width: none; }
+  .paces-search-popover {
+    position: fixed;
+    top: 64px;
+    left: 16px;
+    right: 16px;
+    width: auto;
+    max-width: none;
+  }
+
+  /* 3-column inline grids → 2 columns */
+  [style*="1fr 1fr 1fr"],
+  [style*="1fr 1fr 1fr "],
+  [style*="repeat(3"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .paces-charts-grid { grid-template-columns: 1fr !important; }
+  .paces-apps-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── ≤ 768px: large phones / small tablets ──────────────── */
+@media (max-width: 768px) {
+  .paces-header {
+    height: 58px;
+    padding: 0 12px;
+    gap: 10px;
+  }
+  .paces-header-left { gap: 10px; }
+
+  .paces-search-input { padding: 7px 28px 7px 34px; font-size: 12.5px; }
+  .paces-search-wrap svg { left: 10px; }
+
+  /* header user chip → avatar only */
+  .paces-user-info { display: none; }
+  .paces-user-chip { padding: 3px 3px 3px 3px; }
+  .paces-header-divider { margin: 0 2px; }
+
+  .paces-main { padding: 20px 16px; }
+  .paces-page-header { margin-bottom: 18px; }
+  .paces-page-title { font-size: 18px; }
+  .paces-card { padding: 18px; }
+
+  .paces-icon-btn { width: 34px; height: 34px; font-size: 15px; }
+
+  /* dropdown panels become viewport-anchored sheets */
+  .paces-notif-panel,
+  .paces-apps-panel,
+  .paces-user-panel {
+    position: fixed;
+    top: 60px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+  }
+  .paces-search-popover { top: 58px; left: 12px; right: 12px; }
+
+  .paces-table th { padding: 10px 12px; }
+  .paces-table td { padding: 12px; font-size: 13px; }
+  .paces-table-wrap { -webkit-overflow-scrolling: touch; }
+
+  .paces-pill-tabs { max-width: 100%; overflow-x: auto; }
+  .paces-pill-tab { white-space: nowrap; }
+
+  .paces-filter-bar { width: 100%; }
+  .paces-filter-bar .paces-input,
+  .paces-filter-bar .paces-select { min-width: 0; flex: 1 1 120px; }
+
+  .paces-metrics-row { gap: 12px; }
+  .paces-main .paces-page-title { letter-spacing: -0.2px; }
+}
+
+/* ── ≤ 640px: phones ────────────────────────────────────── */
+@media (max-width: 640px) {
+  /* collapse every inline grid to a single column */
+  [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+
+  .paces-stats-grid { grid-template-columns: 1fr; gap: 12px; }
+  .paces-stat-card { padding: 16px; }
+  .paces-apps-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .paces-header { height: 54px; }
+  .paces-main { padding: 16px 12px; }
+  .paces-card { margin-bottom: 14px; }
+  .paces-card-header { flex-direction: column; align-items: flex-start; }
+
+  .paces-btn { padding: 8px 14px; font-size: 12.5px; }
+  .paces-btn-sm { padding: 5px 9px; }
+
+  .paces-toast {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    justify-content: center;
+    text-align: center;
+    font-size: 12.5px;
+  }
+
+  /* bottom-sheet modals */
+  .paces-modal-overlay { padding: 0; align-items: flex-end; }
+  .paces-modal {
+    border-radius: 20px 20px 0 0;
+    max-height: 92vh;
+    max-width: none;
+    padding: 22px 18px;
+  }
+  .paces-modal-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .paces-modal-footer .paces-btn { width: 100%; }
+
+  .paces-lead-row { flex-wrap: wrap; }
+
+  .paces-notif-panel,
+  .paces-apps-panel,
+  .paces-user-panel { top: 57px; left: 10px; right: 10px; }
+  .paces-search-popover { left: 10px; right: 10px; }
+}
+
+/* ── ≤ 560px: small phones ──────────────────────────────── */
+@media (max-width: 560px) {
+  /* hide Apps + Settings header icons (still reachable in sidebar) */
+  .pace-apps-btn,
+  .pace-settings-btn { display: none; }
+
+  .paces-page-header { flex-direction: column; }
+  .paces-page-header .paces-pill-tabs { align-self: flex-start; }
+  .paces-breadcrumb { flex-wrap: wrap; }
+  .paces-metric-chip { flex: 1 1 46%; }
+
+  .paces-admin-root { font-size: 13.5px; }
+}
+
+/* ── Login page (inline-styled card) ────────────────────── */
+@media (max-width: 640px) {
+  .admin-login-wrap { padding: 20px 12px !important; }
+  .admin-login-wrap > div {
+    padding: 28px 20px !important;
+    border-radius: 18px;
+  }
+  .admin-login-wrap > div > :first-child { flex-wrap: wrap; }
+}

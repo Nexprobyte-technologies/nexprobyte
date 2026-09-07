@@ -19,7 +19,7 @@ const initialForm = {
   name: "",
   email: "",
   phone: "",
-  company: "",
+  company: "Company",
   topic: "New website",
   budget: "",
   message: "",
@@ -60,7 +60,8 @@ export default function Contact() {
           email: form.email,
           phone: form.phone,
           service: form.topic,
-          message: `${form.message}${form.company ? ` (Company: ${form.company})` : ""}${form.budget ? ` (Budget: ${form.budget})` : ""}`,
+          organization: form.company,
+          message: `${form.message}${form.company ? ` (Organization: ${form.company})` : ""}${form.budget ? ` (Budget: ${form.budget})` : ""}`,
         }),
       });
 
@@ -123,7 +124,7 @@ export default function Contact() {
                     <input required value={form.name} onChange={set("name")} placeholder="Enter Your name" />
                   </label>
                   <label>
-                    <span>Work email</span>
+                    <span>Email</span>
                     <input required type="email" value={form.email} onChange={set("email")} placeholder="you@company.com" />
                   </label>
                 </div>
@@ -133,8 +134,11 @@ export default function Contact() {
                     <input type="tel" value={form.phone} onChange={set("phone")} placeholder="+91 ..." />
                   </label>
                   <label>
-                    <span>Company</span>
-                    <input value={form.company} onChange={set("company")} placeholder="Company name" />
+                    <span>Organization</span>
+                    <select value={form.company} onChange={set("company")}>
+                      <option value="Company">Company</option>
+                      <option value="Enquiry">Enquiry</option>
+                    </select>
                   </label>
                 </div>
                 <label>
@@ -152,7 +156,7 @@ export default function Contact() {
                     ))}
                   </div>
                 </label>
-                <div className="form-row">
+                {/* <div className="form-row">
                   <label>
                     <span>Budget range</span>
                     <select value={form.budget} onChange={set("budget")}>
@@ -163,7 +167,7 @@ export default function Contact() {
                       <option>₹5L+</option>
                     </select>
                   </label>
-                </div>
+                </div> */}
                 <label>
                   <span>Tell us more</span>
                   <textarea
