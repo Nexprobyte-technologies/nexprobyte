@@ -13,6 +13,7 @@ const Careers = lazy(() => import("./pages/Careers.jsx"));
 const JobDetail = lazy(() => import("./pages/JobDetail.jsx"));
 const JobApply = lazy(() => import("./pages/JobApply.jsx"));
 const Contact = lazy(() => import("./pages/Contact.jsx"));
+const InterviewDataCollect = lazy(() => import("./pages/InterviewDataCollect.jsx"));
 
 // Admin Panel Components (lazy loaded with named export fallback)
 const AdminLogin = lazy(() => import("./admin/AdminLogin.jsx").then((m) => ({ default: m.AdminLogin || m.default })));
@@ -21,6 +22,8 @@ const AdminDashboard = lazy(() => import("./admin/AdminDashboard.jsx").then((m) 
 const AdminEmployees = lazy(() => import("./admin/AdminEmployees.jsx").then((m) => ({ default: m.AdminEmployees || m.default })));
 const AdminCareers = lazy(() => import("./admin/AdminCareers.jsx").then((m) => ({ default: m.AdminCareers || m.default })));
 const AdminInquiries = lazy(() => import("./admin/AdminInquiries.jsx").then((m) => ({ default: m.AdminInquiries || m.default })));
+const AdminDatasCollect = lazy(() => import("./admin/AdminDatasCollect.jsx").then((m) => ({ default: m.AdminDatasCollect || m.default })));
+const AdminJoinedEmployees = lazy(() => import("./admin/AdminJoinedEmployees.jsx").then((m) => ({ default: m.AdminJoinedEmployees || m.default })));
 const AdminAbout = lazy(() => import("./admin/AdminAbout.jsx").then((m) => ({ default: m.AdminAbout || m.default })));
 const AdminBlogs = lazy(() => import("./admin/AdminBlogs.jsx").then((m) => ({ default: m.AdminBlogs || m.default })));
 const AdminProjects = lazy(() => import("./admin/AdminProjects.jsx").then((m) => ({ default: m.AdminProjects || m.default })));
@@ -158,6 +161,22 @@ export default function App() {
               }
             />
             <Route
+              path="datas-collect"
+              element={
+                <SuperAdminOnlyRoute>
+                  <AdminDatasCollect />
+                </SuperAdminOnlyRoute>
+              }
+            />
+            <Route
+              path="joined-employees"
+              element={
+                <SuperAdminOnlyRoute>
+                  <AdminJoinedEmployees />
+                </SuperAdminOnlyRoute>
+              }
+            />
+            <Route
               path="blogs"
               element={
                 <SuperAdminOnlyRoute>
@@ -190,6 +209,7 @@ export default function App() {
             <Route path="/blog/:slug" element={<PostDetail />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/careers/apply" element={<JobApply />} />
+            <Route path="/interview-data" element={<InterviewDataCollect />} />
             <Route path="/careers/:slug" element={<JobDetail />} />
             <Route path="/careers/:slug/apply" element={<JobApply />} />
             <Route path="/contact" element={<Contact />} />

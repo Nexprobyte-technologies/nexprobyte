@@ -11,6 +11,8 @@ const STATIC_PAGES = [
   { title: "Leave Tracker", category: "Employee", icon: "🌴", path: "/admin/leaves", sub: "Leave balances & applications" },
   { title: "Inquiries & Leads", category: "Pages", icon: "💬", path: "/admin/inquiries", sub: "Manage customer leads & contact messages" },
   { title: "Careers & Recruitment", category: "Pages", icon: "💼", path: "/admin/careers", sub: "Post jobs & review applications" },
+  { title: "Datas Collect", category: "Management", icon: "🗂️", path: "/admin/datas-collect", sub: "Interview candidate data & resume uploads" },
+  { title: "Joined Employees", category: "Management", icon: "🤝", path: "/admin/joined-employees", sub: "Onboarded employees & uploaded documents" },
   { title: "Blog Articles & Insights", category: "Pages", icon: "📰", path: "/admin/blogs", sub: "Manage and publish blog posts" },
   { title: "About Content Editor", category: "Pages", icon: "✏️", path: "/admin/about", sub: "Edit company story, mission & statistics" },
   { title: "Live Website", category: "Pages", icon: "🌐", path: "/", sub: "View public facing website", external: true },
@@ -419,6 +421,17 @@ export function AdminLayout() {
                   Projects &amp; Deliverables
                 </NavLink>
               </div>
+              <div className="paces-nav-section">
+                <div className="paces-nav-section-label">INTERVIEW</div>
+                <NavLink to="/admin/datas-collect" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
+                  <span className="paces-nav-icon">🗂️</span>
+                  Datas Collect
+                </NavLink>
+                <NavLink to="/admin/joined-employees" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
+                  <span className="paces-nav-icon">🤝</span>
+                  Joined Employees
+                </NavLink>
+              </div>
 
               <div className="paces-nav-section">
                 <div className="paces-nav-section-label">Management</div>
@@ -649,6 +662,14 @@ export function AdminLayout() {
                         <Link to="/admin/careers" className="paces-app-tile" onClick={() => setShowApps(false)}>
                           <div className="paces-app-tile-icon">💼</div>
                           <div className="paces-app-tile-title">Careers</div>
+                        </Link>
+                        <Link to="/admin/datas-collect" className="paces-app-tile" onClick={() => setShowApps(false)}>
+                          <div className="paces-app-tile-icon">🗂️</div>
+                          <div className="paces-app-tile-title">Datas Collect</div>
+                        </Link>
+                        <Link to="/admin/joined-employees" className="paces-app-tile" onClick={() => setShowApps(false)}>
+                          <div className="paces-app-tile-icon">🤝</div>
+                          <div className="paces-app-tile-title">Joined Employees</div>
                         </Link>
                         <Link to="/admin/blogs" className="paces-app-tile" onClick={() => setShowApps(false)}>
                           <div className="paces-app-tile-icon">📰</div>

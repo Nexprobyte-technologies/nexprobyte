@@ -105,8 +105,8 @@ body.admin-route textarea,
 .paces-admin-root {
   min-height: 100vh;
   background: var(--p-content-bg);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", sans-serif;
-  font-size: 14px;
+  font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  font-size: 13px;
   color: var(--p-text-body);
   display: flex;
   flex-direction: column;
@@ -877,6 +877,16 @@ body.admin-route textarea,
   box-shadow: 0 4px 12px rgba(255,77,109,0.35);
   transform: translateY(-1px);
 }
+.paces-btn-purple {
+  background: #7c3aed;
+  color: #fff !important;
+  box-shadow: 0 2px 8px rgba(124,58,237,0.3);
+}
+.paces-btn-purple:hover {
+  background: #6d28d9;
+  box-shadow: 0 4px 12px rgba(124,58,237,0.35);
+  transform: translateY(-1px);
+}
 .paces-btn-outline {
   background: var(--p-card-bg);
   color: var(--p-text-dark);
@@ -935,6 +945,7 @@ body.admin-route textarea,
 .badge-orange  { background: var(--p-orange-light); color: #c2410c; }
 .badge-blue    { background: var(--p-blue-light);   color: #1d4ed8; }
 .badge-gray    { background: var(--p-table-th-bg);  color: var(--p-text-muted); }
+.badge-purple  { background: var(--p-purple-light, #f3e8ff); color: #7c3aed; }
 
 /* ── Modals & Drawers ────────────────────────────────────── */
 .paces-modal-overlay {
@@ -1118,6 +1129,101 @@ body.admin-route textarea,
 /* ── Animations ──────────────────────────────────────────── */
 @keyframes paces-fade-in  { from { opacity: 0; } to { opacity: 1; } }
 @keyframes paces-slide-up { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ══════════════════════════════════════════════════════════
+   COMPACT ADMIN UI — tighter spacing, smaller type,
+   single font family (Archivo, matching public site)
+   ══════════════════════════════════════════════════════════ */
+
+.paces-admin-root { font-size: 13px; }
+
+/* Sidebar */
+.paces-sidebar { width: 216px; }
+.paces-sidebar-profile { padding: 14px 12px 12px; }
+.paces-sidebar-profile-inner { padding: 10px; gap: 10px; }
+.paces-sidebar-avatar { width: 34px; height: 34px; font-size: 13px; }
+.paces-sidebar-name { font-size: 12px; }
+.paces-sidebar-role { font-size: 10.5px; }
+.paces-nav-section { padding: 12px 0 2px; }
+.paces-nav-section-label { padding: 0 16px 6px; font-size: 9px; }
+.paces-nav-link { padding: 7px 16px; font-size: 12.5px; gap: 9px; }
+
+/* Header */
+.paces-header { height: 54px; padding: 0 20px; }
+.paces-search-input { padding: 6px 30px 6px 36px; font-size: 12.5px; }
+.paces-icon-btn { width: 34px; height: 34px; font-size: 15px; }
+.paces-user-avatar { width: 30px; height: 30px; font-size: 12px; }
+.paces-user-name { font-size: 11.5px; }
+.paces-user-role { font-size: 10px; }
+
+/* Content */
+.paces-main { padding: 20px 24px; }
+.paces-page-header { margin-bottom: 18px; }
+.paces-page-title { font-size: 18px; }
+.paces-breadcrumb { font-size: 11px; margin-top: 3px; }
+
+/* Cards */
+.paces-card { padding: 16px; margin-bottom: 16px; }
+.paces-card-header { margin-bottom: 14px; }
+.paces-card-title { font-size: 14px; }
+.paces-card-subtitle { font-size: 11.5px; }
+
+/* Stats */
+.paces-stats-grid { gap: 14px; margin-bottom: 16px; }
+.paces-stat-card { padding: 16px; gap: 8px; }
+.paces-stat-label { font-size: 9.5px; }
+.paces-stat-value { font-size: 22px; }
+
+/* Tables */
+.paces-table th { padding: 9px 12px; font-size: 10px; }
+.paces-table td { padding: 10px 12px; font-size: 12.5px; }
+.paces-td-name { font-size: 12.5px; }
+.paces-td-sub { font-size: 11px; }
+
+/* Buttons */
+.paces-btn { padding: 7px 14px; font-size: 12.5px; }
+.paces-btn-sm { padding: 4px 9px; font-size: 11.5px; }
+
+/* Badges */
+.paces-badge { padding: 2px 9px; font-size: 11px; }
+
+/* Forms */
+.paces-form-group { margin-bottom: 13px; }
+.paces-label { font-size: 11.5px; margin-bottom: 5px; }
+.paces-input,
+.paces-textarea,
+.paces-select { padding: 7px 11px; font-size: 12.5px; }
+
+/* Modals */
+.paces-modal { padding: 22px; }
+.paces-modal-header { margin-bottom: 15px; padding-bottom: 13px; }
+.paces-modal-title { font-size: 15px; }
+.paces-modal-footer { margin-top: 18px; padding-top: 13px; }
+
+/* Detail rows */
+.paces-detail-row { padding: 9px 0; }
+.paces-detail-key { font-size: 10px; }
+.paces-detail-value { font-size: 13px; }
+
+/* Pills / filters / misc */
+.paces-pill-tab { padding: 4px 10px; font-size: 11.5px; }
+.paces-metric-chip { padding: 8px 13px; }
+.paces-metric-val { font-size: 14px; }
+.paces-metric-lbl { font-size: 10.5px; }
+.paces-alert { padding: 10px 14px; font-size: 12px; margin-bottom: 13px; }
+.paces-empty { padding: 36px 20px; }
+.paces-empty-text { font-size: 13px; }
+.paces-empty-sub { font-size: 11.5px; }
+.paces-notif-title { font-size: 13px; }
+.paces-notif-heading { font-size: 12.5px; }
+.paces-notif-desc { font-size: 11px; }
+.paces-notif-time { font-size: 10px; }
+.paces-app-tile-icon { font-size: 19px; }
+.paces-app-tile-title { font-size: 11px; }
+.paces-user-menu-item { font-size: 12.5px; }
+.paces-search-item { font-size: 12.5px; }
+.paces-search-item-sub { font-size: 11px; }
+.paces-toast { font-size: 12.5px; }
 
 /* ══════════════════════════════════════════════════════════
    RESPONSIVE / MEDIA QUERIES

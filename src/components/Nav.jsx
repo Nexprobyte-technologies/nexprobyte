@@ -56,6 +56,12 @@ const NAV_ITEMS = [
             icon: "🚀",
             subtext: "Join our Coimbatore digital team",
           },
+          {
+            label: "Collect Interview Data",
+            to: "/interview-data",
+            icon: "🗂️",
+            subtext: "Submit your details for an interview slot",
+          },
         ],
       },
       {
