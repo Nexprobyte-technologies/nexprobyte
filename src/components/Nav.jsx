@@ -145,7 +145,14 @@ export function Nav() {
           </motion.span>
 
           {/* Desktop Navigation */}
-          <nav className="nav-links" aria-label="Main">
+          <div className="nav-desktop">
+            <div className="nav-contact">
+              <a href="mailto:info@nexprobyte.com">✉️ info@nexprobyte.com</a>
+              <span className="nav-contact-sep">|</span>
+              <a href="tel:+919500042426">📞 +91 95000 42426</a>
+            </div>
+            <hr className="nav-hr" />
+            <nav className="nav-links" aria-label="Main">
             {NAV_ITEMS.map((item, i) =>
               item.isDropdown ? (
                 <motion.span
@@ -262,12 +269,10 @@ export function Nav() {
               )
             )}
           </nav>
+          </div>
 
           {/* Right Hamburger / CTA Area */}
           <div className="nav-right">
-            <Link to="/contact" className="btn btn-solid nav-cta-btn">
-              Get in Touch <span className="arr">→</span>
-            </Link>
             <button
               className="menu-btn"
               onClick={() => setOpen(true)}

@@ -16,13 +16,21 @@ const STATIC_PAGES = [
   { title: "Live Website", category: "Pages", icon: "🌐", path: "/", sub: "View public facing website", external: true },
 ];
 
-const INITIAL_NOTIFICATIONS = [
-  { id: 1, icon: "💬", bg: "#fff0f3", title: "New Inquiry from Rajesh Kumar", desc: "Requested Website Development quote", time: "5 mins ago", unread: true, path: "/admin/inquiries" },
-  { id: 2, icon: "📄", bg: "#eff6ff", title: "New Job Application received", desc: "Priya applied for Senior React Engineer", time: "25 mins ago", unread: true, path: "/admin/careers" },
-  { id: 3, icon: "💬", bg: "#fff0f3", title: "New Inquiry from Ananya Sharma", desc: "Mobile App Development project inquiry", time: "1 hour ago", unread: true, path: "/admin/inquiries" },
-  { id: 4, icon: "🟢", bg: "#ecfdf5", title: "REST API & MongoDB Synced", desc: "Backend database connection is healthy", time: "3 hours ago", unread: false, path: "/admin" },
-  { id: 5, icon: "💼", bg: "#fff7ed", title: "Job Opening Live", desc: "UI/UX Designer position is accepting applications", time: "1 day ago", unread: false, path: "/admin/careers" },
-];
+function timeAgo(iso) {
+  if (!iso) return "just now";
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins} min${mins > 1 ? "s" : ""} ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs} hour${hrs > 1 ? "s" : ""} ago`;
+  const days = Math.floor(hrs / 24);
+  if (days < 30) return `${days} day${days > 1 ? "s" : ""} ago`;
+  const months = Math.floor(days / 30);
+  return `${months} month${months > 1 ? "s" : ""} ago`;
+}
+
+const READ_KEY = "nex_admin_notif_read";
 
 export function AdminLayout() {
   const navigate = useNavigate();
@@ -49,7 +57,8 @@ export function AdminLayout() {
   const [showSettings, setShowSettings] = useState(false);
 
   // Notifications state
-  const [notifications, setNotifications] = useState(INITIAL_NOTIFICATIONS);
+  const [notifications, setNotifications] = useState([]);
+  const [loadingNotifs, setLoadingNotifs] = useState(true);
 
   // Toast state
   const [toastMsg, setToastMsg] = useState("");
@@ -122,6 +131,79 @@ export function AdminLayout() {
     loadSearchIndex();
   }, []);
 
+  // Load real notifications from inquiries & applications
+  useEffect(() => {
+    const token = localStorage.getItem("nex_admin_token");
+    if (!token) return;
+
+    let cancelled = false;
+
+    const loadNotifications = async () => {
+      try {
+        const [inqRes, appRes] = await Promise.all([
+          fetch("/api/inquiries", { headers: { Authorization: `Bearer ${token}` } }),
+          fetch("/api/applications", { headers: { Authorization: `Bearer ${token}` } }),
+        ]);
+        const inquiries = inqRes.ok ? await inqRes.json() : [];
+        const applications = appRes.ok ? await appRes.json() : [];
+
+        let readSet = {};
+        try {
+          readSet = JSON.parse(localStorage.getItem(READ_KEY) || "{}");
+        } catch {
+          readSet = {};
+        }
+
+        const items = [];
+
+        (inquiries || []).forEach((inq) => {
+          items.push({
+            id: String(inq._id || inq.id || "inq-" + inq.email + inq.createdAt),
+            icon: "💬",
+            bg: "#fff0f3",
+            title: `New Inquiry from ${inq.name || "a user"}`,
+            desc: `${inq.service || "General inquiry"} — ${inq.email || ""}`,
+            time: timeAgo(inq.createdAt),
+            path: "/admin/inquiries",
+          });
+        });
+
+        (applications || []).forEach((app) => {
+          items.push({
+            id: String(app._id || app.id || "app-" + app.email + app.createdAt),
+            icon: "📄",
+            bg: "#eff6ff",
+            title: `New Job Application from ${app.name || "a candidate"}`,
+            desc: `${app.jobTitle || "General"} — ${app.email || ""}`,
+            time: timeAgo(app.createdAt),
+            path: "/admin/careers",
+          });
+        });
+
+        const withRead = items.map((n) => ({
+          ...n,
+          unread: !readSet[n.id],
+        }));
+
+        if (!cancelled) {
+          setNotifications(withRead);
+          setLoadingNotifs(false);
+        }
+      } catch (e) {
+        console.error("Notification load error:", e);
+        if (!cancelled) setLoadingNotifs(false);
+      }
+    };
+
+    loadNotifications();
+    const interval = setInterval(loadNotifications, 60000);
+
+    return () => {
+      cancelled = true;
+      clearInterval(interval);
+    };
+  }, []);
+
   // Close dropdowns on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -158,8 +240,29 @@ export function AdminLayout() {
   };
 
   const markAllNotificationsRead = () => {
-    setNotifications((prev) => prev.map((n) => ({ ...n, unread: false })));
+    setNotifications((prev) => {
+      const allRead = prev.map((n) => ({ ...n, unread: false }));
+      const readSet = {};
+      allRead.forEach((n) => (readSet[n.id] = true));
+      localStorage.setItem(READ_KEY, JSON.stringify(readSet));
+      return allRead;
+    });
     showToast("All notifications marked as read");
+  };
+
+  const markOneRead = (id) => {
+    setNotifications((prev) => {
+      const next = prev.map((n) => (n.id === id ? { ...n, unread: false } : n));
+      let readSet = {};
+      try {
+        readSet = JSON.parse(localStorage.getItem(READ_KEY) || "{}");
+      } catch {
+        readSet = {};
+      }
+      readSet[id] = true;
+      localStorage.setItem(READ_KEY, JSON.stringify(readSet));
+      return next;
+    });
   };
 
   const unreadCount = notifications.filter((n) => n.unread).length;
@@ -609,28 +712,38 @@ export function AdminLayout() {
                     )}
                   </div>
                   <div className="paces-notif-list">
-                    {notifications.map((n) => (
-                      <Link
-                        key={n.id}
-                        to={n.path}
-                        className={`paces-notif-item ${n.unread ? "unread" : ""}`}
-                        onClick={() => {
-                          setNotifications((prev) =>
-                            prev.map((item) => (item.id === n.id ? { ...item, unread: false } : item))
-                          );
-                          setShowNotif(false);
-                        }}
-                      >
-                        <div className="paces-notif-icon" style={{ background: n.bg }}>
-                          {n.icon}
-                        </div>
-                        <div className="paces-notif-content">
-                          <div className="paces-notif-heading">{n.title}</div>
-                          <div className="paces-notif-desc">{n.desc}</div>
-                          <div className="paces-notif-time">{n.time}</div>
-                        </div>
-                      </Link>
-                    ))}
+                    {loadingNotifs ? (
+                      <div style={{ padding: "24px", textAlign: "center", color: "var(--p-text-muted)", fontSize: "13px" }}>
+                        Loading notifications…
+                      </div>
+                    ) : notifications.length === 0 ? (
+                      <div style={{ padding: "28px 20px", textAlign: "center", color: "var(--p-text-muted)" }}>
+                        <div style={{ fontSize: "28px", marginBottom: "8px" }}>🔕</div>
+                        <div style={{ fontWeight: 600, fontSize: "13px" }}>No notifications yet</div>
+                        <div style={{ fontSize: "11.5px", marginTop: "4px" }}>New inquiries &amp; applications will appear here</div>
+                      </div>
+                    ) : (
+                      notifications.map((n) => (
+                        <Link
+                          key={n.id}
+                          to={n.path}
+                          className={`paces-notif-item ${n.unread ? "unread" : ""}`}
+                          onClick={() => {
+                            markOneRead(n.id);
+                            setShowNotif(false);
+                          }}
+                        >
+                          <div className="paces-notif-icon" style={{ background: n.bg }}>
+                            {n.icon}
+                          </div>
+                          <div className="paces-notif-content">
+                            <div className="paces-notif-heading">{n.title}</div>
+                            <div className="paces-notif-desc">{n.desc}</div>
+                            <div className="paces-notif-time">{n.time}</div>
+                          </div>
+                        </Link>
+                      ))
+                    )}
                   </div>
                   <div className="paces-notif-footer">
                     <Link

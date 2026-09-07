@@ -45,10 +45,58 @@ export default function Contact() {
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
+
+  const validate = () => {
+    const fe = {};
+    const name = form.name.trim();
+    const email = form.email.trim();
+    const phone = form.phone.trim();
+    const message = form.message.trim();
+
+    if (!name) {
+      fe.name = "Please enter your name.";
+    } else if (name.length < 2) {
+      fe.name = "Name must be at least 2 characters.";
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+      fe.email = "Please enter your email.";
+    } else if (!emailRegex.test(email)) {
+      fe.email = "Please enter a valid email (e.g. you@company.com).";
+    }
+
+    const phoneDigits = phone.replace(/[^0-9]/g, "");
+    if (!phone) {
+      fe.phone = "Please enter your phone number.";
+    } else if (phoneDigits.length < 10 || phoneDigits.length > 11) {
+      fe.phone = "Please enter a valid phone number (10–11 digits).";
+    } else if (!/^\+?[0-9]{1,4}[\s-]?[0-9]{6,14}$/.test(phone.trim())) {
+      fe.phone = "Please enter a valid phone number (e.g. +91 98765 43210).";
+    }
+
+    if (!form.topic) {
+      fe.topic = "Please select a topic.";
+    }
+
+    if (!message) {
+      fe.message = "Please tell us a little about your project.";
+    }
+
+    setFieldErrors(fe);
+    return Object.keys(fe).length === 0;
+  };
 
   const submit = async (e) => {
     e.preventDefault();
     setError("");
+    setFieldErrors({});
+
+    if (!validate()) {
+      return;
+    }
+
     setSubmitting(true);
 
     try {
@@ -121,17 +169,49 @@ export default function Contact() {
                 <div className="form-row">
                   <label>
                     <span>Your name</span>
-                    <input required value={form.name} onChange={set("name")} placeholder="Enter Your name" />
+                    <input
+                      required
+                      value={form.name}
+                      onChange={(e) => {
+                        set("name")(e);
+                        if (fieldErrors.name) setFieldErrors((p) => ({ ...p, name: "" }));
+                      }}
+                      placeholder="Enter Your name"
+                      style={fieldErrors.name ? { borderColor: "#ef4444" } : undefined}
+                    />
+                    {fieldErrors.name && <em className="field-error">{fieldErrors.name}</em>}
                   </label>
                   <label>
                     <span>Email</span>
-                    <input required type="email" value={form.email} onChange={set("email")} placeholder="you@company.com" />
+                    <input
+                      required
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => {
+                        set("email")(e);
+                        if (fieldErrors.email) setFieldErrors((p) => ({ ...p, email: "" }));
+                      }}
+                      placeholder="you@company.com"
+                      style={fieldErrors.email ? { borderColor: "#ef4444" } : undefined}
+                    />
+                    {fieldErrors.email && <em className="field-error">{fieldErrors.email}</em>}
                   </label>
                 </div>
                 <div className="form-row">
                   <label>
                     <span>Phone</span>
-                    <input type="tel" value={form.phone} onChange={set("phone")} placeholder="+91 ..." />
+                    <input
+                      type="tel"
+                      required
+                      value={form.phone}
+                      onChange={(e) => {
+                        set("phone")(e);
+                        if (fieldErrors.phone) setFieldErrors((p) => ({ ...p, phone: "" }));
+                      }}
+                      placeholder="+91 98765 43210"
+                      style={fieldErrors.phone ? { borderColor: "#ef4444" } : undefined}
+                    />
+                    {fieldErrors.phone && <em className="field-error">{fieldErrors.phone}</em>}
                   </label>
                   <label>
                     <span>Organization</span>
@@ -173,9 +253,15 @@ export default function Contact() {
                   <textarea
                     rows={5}
                     value={form.message}
-                    onChange={set("message")}
+                    required
+                    onChange={(e) => {
+                      set("message")(e);
+                      if (fieldErrors.message) setFieldErrors((p) => ({ ...p, message: "" }));
+                    }}
                     placeholder="Goals, timeline, links to anything we should see…"
+                    style={fieldErrors.message ? { borderColor: "#ef4444" } : undefined}
                   />
+                  {fieldErrors.message && <em className="field-error">{fieldErrors.message}</em>}
                 </label>
                 <motion.button
                   type="submit"
