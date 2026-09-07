@@ -7,6 +7,32 @@ export const setMongoConnected = (status) => {
 export const getMongoConnected = () => isMongoConnected;
 
 export const memoryStore = {
+  expenses: [
+    {
+      _id: "exp-1",
+      date: new Date().toISOString().split("T")[0],
+      category: "Travel",
+      to: "Priya Sharma",
+      reason: "Client site visit - Apex Capital",
+      amount: 1250,
+      type: "Office",
+      note: "Cab fare to client location",
+      recordedByName: "NexAdmin",
+      createdAt: new Date(Date.now() - 3600000 * 4).toISOString(),
+    },
+    {
+      _id: "exp-2",
+      date: new Date(Date.now() - 86400000).toISOString().split("T")[0],
+      category: "Salary",
+      to: "Monthly Payroll",
+      reason: "August salary for team",
+      amount: 125000,
+      type: "Salary",
+      note: "",
+      recordedByName: "NexAdmin",
+      createdAt: new Date(Date.now() - 86400000).toISOString(),
+    },
+  ],
   inquiries: [
     {
       _id: "inq-1",

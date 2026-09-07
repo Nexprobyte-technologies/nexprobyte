@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import Pagination, { usePagination } from "./Pagination.jsx";
 import "./admin-styles.css";
 
 const CATEGORIES = ["Web", "Marketing", "Business", "Design", "SEO", "Tech", "General"];
@@ -225,6 +226,12 @@ export function AdminBlogs() {
     (p) => categoryFilter === "All" || p.category === categoryFilter
   );
 
+  const pag = usePagination(filteredPosts);
+
+  useEffect(() => {
+    pag.reset();
+  }, [categoryFilter]);
+
   const totalViews = posts.reduce((sum, p) => sum + (p.views || 0), 0);
 
   return (
@@ -326,7 +333,7 @@ export function AdminBlogs() {
                 </tr>
               </thead>
               <tbody>
-                {filteredPosts.map((p) => {
+                {pag.paged.map((p) => {
                   const postId = p._id || p.id || p.slug;
                   const isExpanded = expandedPostId === postId;
                   return (
@@ -507,6 +514,8 @@ export function AdminBlogs() {
           </div>
         )}
       </div>
+
+      <Pagination page={pag.page} pageCount={pag.totalPages} total={pag.total} onPage={pag.go} />
 
       {/* ── Add / Edit Blog Post Modal with Image Upload ─────── */}
       {showModal && (

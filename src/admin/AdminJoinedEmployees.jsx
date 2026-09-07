@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./admin-styles.css";
+import Pagination, { usePagination } from "./Pagination.jsx";
 
 const AVATAR_COLORS = ["#ff4d6d","#10b981","#3b82f6","#8b5cf6","#f97316","#06b6d4","#ec4899"];
 function getAvatarColor(name = "") {
@@ -71,6 +72,8 @@ export function AdminJoinedEmployees() {
   const [editSaving, setEditSaving] = useState(false);
   const [editError, setEditError] = useState("");
   const [msg, setMsg] = useState("");
+
+  const pag = usePagination(entries);
 
   useEffect(() => { fetchEntries(); }, []);
 
@@ -366,7 +369,7 @@ export function AdminJoinedEmployees() {
                 </tr>
               </thead>
               <tbody>
-                {entries.map((entry) => {
+                {pag.paged.map((entry) => {
                   const ob = entry.onboarding || {};
                   const docs = [
                     ["Aadhar", "aadhar"],
@@ -454,6 +457,7 @@ export function AdminJoinedEmployees() {
           </div>
         )}
       </div>
+      <Pagination page={pag.page} pageCount={pag.totalPages} total={pag.total} onPage={pag.go} />
     </div>
   );
 }

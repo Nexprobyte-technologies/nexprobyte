@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Pagination, { usePagination } from "./Pagination.jsx";
 import "./admin-styles.css";
 
 const AVATAR_COLORS = ["#ff4d6d","#10b981","#3b82f6","#8b5cf6","#f97316","#06b6d4","#ec4899"];
@@ -55,6 +56,10 @@ export function AdminInquiries() {
   };
 
   const filtered = inquiries.filter(i => filterStatus === "All" || i.status === filterStatus);
+
+  const pag = usePagination(filtered);
+
+  useEffect(() => { pag.reset(); }, [filterStatus]);
 
   const badgeClass = s =>
     s === "New"         ? "badge-coral" :
@@ -116,7 +121,7 @@ export function AdminInquiries() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.map(inq => (
+                {pag.paged.map(inq => (
                   <tr key={inq._id}>
                     <td>
                       <div className="paces-lead-row">
@@ -195,6 +200,8 @@ export function AdminInquiries() {
           </div>
         )}
       </div>
+
+      <Pagination page={pag.page} pageCount={pag.totalPages} total={pag.total} onPage={pag.go} />
 
       {/* Detail Modal */}
       {selectedInquiry && (

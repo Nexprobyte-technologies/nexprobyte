@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./admin-styles.css";
+import Pagination, { usePagination } from "./Pagination.jsx";
 
 const AVATAR_COLORS = [
   "#ff4d6d","#10b981","#3b82f6","#8b5cf6","#f97316","#06b6d4","#ec4899",
@@ -112,6 +113,8 @@ export function AdminDashboard() {
       : status === "In Progress"
       ? "badge-blue"
       : "badge-gray";
+
+  const pagEmp = usePagination(employees);
 
   return (
     <div>
@@ -579,7 +582,7 @@ export function AdminDashboard() {
                 </tr>
               </thead>
               <tbody>
-                {employees.map((emp) => {
+                {pagEmp.paged.map((emp) => {
                   const todayRec = employeeAttendanceMap[emp.empId] || employeeAttendanceMap[emp._id];
                   const hasPunched = !!todayRec;
                   const isConfirmed = emp.status === "Confirmed";
@@ -686,6 +689,13 @@ export function AdminDashboard() {
           </div>
         )}
       </div>
+
+      <Pagination
+        page={pagEmp.page}
+        pageCount={pagEmp.totalPages}
+        total={pagEmp.total}
+        onPage={pagEmp.go}
+      />
 
       {/* Recent Contact Inquiries */}
       <div className="paces-card">

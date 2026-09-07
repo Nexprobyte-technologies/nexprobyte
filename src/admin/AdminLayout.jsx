@@ -13,6 +13,7 @@ const STATIC_PAGES = [
   { title: "Careers & Recruitment", category: "Pages", icon: "💼", path: "/admin/careers", sub: "Post jobs & review applications" },
   { title: "Datas Collect", category: "Management", icon: "🗂️", path: "/admin/datas-collect", sub: "Interview candidate data & resume uploads" },
   { title: "Joined Employees", category: "Management", icon: "🤝", path: "/admin/joined-employees", sub: "Onboarded employees & uploaded documents" },
+  { title: "Accounts & Expenses", category: "Management", icon: "💰", path: "/admin/accounts", sub: "Office & salary expense ledger" },
   { title: "Blog Articles & Insights", category: "Pages", icon: "📰", path: "/admin/blogs", sub: "Manage and publish blog posts" },
   { title: "About Content Editor", category: "Pages", icon: "✏️", path: "/admin/about", sub: "Edit company story, mission & statistics" },
   { title: "Live Website", category: "Pages", icon: "🌐", path: "/", sub: "View public facing website", external: true },
@@ -432,6 +433,14 @@ export function AdminLayout() {
                   Joined Employees
                 </NavLink>
               </div>
+              <div className="paces-nav-section">
+                <div className="paces-nav-section-label">Accounts Portal</div>
+                 <NavLink to="/admin/accounts" className={({ isActive }) => `paces-nav-link ${isActive ? "active" : ""}`}>
+                  <span className="paces-nav-icon">💰</span>
+                  Accounts &amp; Expenses
+                </NavLink>
+              </div>
+             
 
               <div className="paces-nav-section">
                 <div className="paces-nav-section-label">Management</div>
@@ -451,6 +460,7 @@ export function AdminLayout() {
                   <span className="paces-nav-icon">✏️</span>
                   About Editor
                 </NavLink>
+                
               </div>
             </>
           )}
@@ -678,6 +688,10 @@ export function AdminLayout() {
                         <Link to="/admin/about" className="paces-app-tile" onClick={() => setShowApps(false)}>
                           <div className="paces-app-tile-icon">✏️</div>
                           <div className="paces-app-tile-title">About</div>
+                        </Link>
+                        <Link to="/admin/accounts" className="paces-app-tile" onClick={() => setShowApps(false)}>
+                          <div className="paces-app-tile-icon">💰</div>
+                          <div className="paces-app-tile-title">Accounts</div>
                         </Link>
                       </>
                     )}

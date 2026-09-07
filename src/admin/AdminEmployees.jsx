@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Pagination, { usePagination } from "./Pagination.jsx";
 import "./admin-styles.css";
 
 export function AdminEmployees() {
@@ -614,6 +615,9 @@ export function AdminEmployees() {
   const drawerFilteredAtt = getFilteredAttendance();
   const drawerFilteredLv = getFilteredLeaves();
 
+  const pagEmp = usePagination(filteredEmployees);
+  useEffect(() => { pagEmp.reset(); }, [search, filterDept, filterStatus]);
+
   return (
     <div>
       {/* Toast Notification */}
@@ -830,7 +834,7 @@ export function AdminEmployees() {
                 </tr>
               </thead>
               <tbody>
-                {filteredEmployees.map((emp) => {
+                {pagEmp.paged.map((emp) => {
                   const isConfirmed = emp.status === "Confirmed";
                   const isExpanded = expandedEmpId === emp.empId;
                   const activity = empActivityMap[emp.empId] || { attendance: [], workReports: [], leaves: [], loading: false };
@@ -1459,6 +1463,13 @@ export function AdminEmployees() {
           </div>
         )}
       </div>
+
+      <Pagination
+        page={pagEmp.page}
+        pageCount={pagEmp.totalPages}
+        total={pagEmp.total}
+        onPage={pagEmp.go}
+      />
 
       {/* ── MODAL 1: Create / Confirm Credentials ── */}
       {showConfirmModal && targetEmp && (

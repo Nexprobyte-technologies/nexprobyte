@@ -24,6 +24,7 @@ import workReportRoutes from "./routes/workReportRoutes.js";
 import leaveRoutes from "./routes/leaveRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
 import interviewDataRoutes from "./routes/interviewDataRoutes.js";
+import expenseRoutes from "./routes/expenseRoutes.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -58,6 +59,7 @@ app.use("/api/work-reports", workReportRoutes);
 app.use("/api/leaves", leaveRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/interview-data", interviewDataRoutes);
+app.use("/api/expenses", expenseRoutes);
 
 // Root health check endpoint
 app.get("/api/health", (req, res) => {

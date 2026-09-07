@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Pagination, { usePagination } from "./Pagination.jsx";
 import "./admin-styles.css";
 
 const CATEGORIES = [
@@ -310,6 +311,12 @@ export function AdminProjects() {
     return matchesSearch && matchesCategory && matchesStatus && matchesPriority;
   });
 
+  const pag = usePagination(filteredProjects);
+
+  useEffect(() => {
+    pag.reset();
+  }, [searchTerm, selectedCategory, selectedStatus, selectedPriority]);
+
   // KPI calculations
   const totalCount = projects.length;
   const inProgressCount = projects.filter((p) => p.status === "In Progress").length;
@@ -589,7 +596,7 @@ export function AdminProjects() {
                 </tr>
               </thead>
               <tbody>
-                {filteredProjects.map((proj) => {
+                {pag.paged.map((proj) => {
                   const isExpanded =
                     expandedProjectId === (proj._id || proj.projectId);
                   const deadlinePassed =
@@ -1135,6 +1142,8 @@ export function AdminProjects() {
           </div>
         )}
       </div>
+
+      <Pagination page={pag.page} pageCount={pag.totalPages} total={pag.total} onPage={pag.go} />
 
       {/* ── Add / Edit Project Modal ── */}
       {showModal && (

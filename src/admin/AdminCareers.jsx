@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Pagination, { usePagination } from "./Pagination.jsx";
 import "./admin-styles.css";
 
 const DEPT_COLORS = {
@@ -26,7 +27,7 @@ export function AdminCareers() {
   const [formError, setFormError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     title: "",
     dept: "Engineering",
     location: "Coimbatore",
@@ -36,6 +37,9 @@ export function AdminCareers() {
     responsibilities: "",
     requirements: "",
   });
+
+  const pagJobs = usePagination(jobs);
+  const pagApps = usePagination(applications);
 
   useEffect(() => {
     fetchData();
@@ -330,7 +334,7 @@ export function AdminCareers() {
                   </tr>
                 </thead>
                 <tbody>
-                  {jobs.map((j) => {
+                  {pagJobs.paged.map((j) => {
                     const jobId = j._id || j.id || j.slug;
                     const isExpanded = expandedJobId === jobId;
                     return (
@@ -441,10 +445,12 @@ export function AdminCareers() {
                   })}
                 </tbody>
               </table>
-            </div>
+</div>
           )}
         </div>
       )}
+
+      <Pagination page={pagJobs.page} pageCount={pagJobs.totalPages} total={pagJobs.total} onPage={pagJobs.go} />
 
       {/* ── 2. Candidate Applications Table Tab ───────────── */}
       {activeTab === "applications" && (
@@ -472,7 +478,7 @@ export function AdminCareers() {
                   </tr>
                 </thead>
                 <tbody>
-                  {applications.map((app) => {
+                  {pagApps.paged.map((app) => {
                     const isExpanded = expandedAppId === app._id;
                     return (
                       <React.Fragment key={app._id}>
@@ -726,13 +732,15 @@ export function AdminCareers() {
                         )}
                       </React.Fragment>
                     );
-                  })}
+})}
                 </tbody>
               </table>
             </div>
           )}
         </div>
       )}
+
+      <Pagination page={pagApps.page} pageCount={pagApps.totalPages} total={pagApps.total} onPage={pagApps.go} />
 
       {/* Add / Edit Job Modal */}
       {showModal && (
