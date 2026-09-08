@@ -23,7 +23,6 @@ router.post("/", async (req, res) => {
   if (!email || !email.includes("@")) return res.status(400).json({ message: "Valid Email is required." });
 
   const newEntry = {
-    _id: "ivw-" + Date.now(),
     name: name.trim(),
     dob: dob || "",
     email: email.trim(),
@@ -38,13 +37,20 @@ router.post("/", async (req, res) => {
   };
 
   if (getMongoConnected()) {
-    try {
-      const doc = await InterviewData.create(newEntry);
-      return res.status(201).json({ message: "Interview data saved successfully!", entry: doc });
-    } catch (e) {
-      console.error(e);
-    }
+  try {
+    const doc = await InterviewData.create(newEntry);
+    return res.status(201).json({
+      message: "Interview data saved successfully!",
+      entry: doc,
+    });
+  } catch (e) {
+    console.error("Create interview data error:", e);
+    return res.status(500).json({
+      message: "Failed to save interview data",
+      error: e.message,
+    });
   }
+}
 
   memoryStore.interviewData.unshift(newEntry);
   return res.status(201).json({ message: "Interview data saved successfully!", entry: newEntry });
