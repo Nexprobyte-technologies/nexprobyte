@@ -67,7 +67,6 @@ router.post("/", verifyToken, async (req, res) => {
   const password = req.body.password || (initialStatus === "Confirmed" ? "Password@123" : "");
 
   const newEmp = {
-    // _id: `emp-${Date.now()}`,
     empId: newEmpId,
     name: name.trim(),
     email: email.trim().toLowerCase(),
