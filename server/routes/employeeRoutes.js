@@ -62,7 +62,7 @@ router.post("/", verifyToken, async (req, res) => {
     return res.status(400).json({ message: "Name and email are required" });
   }
 
-  const newEmpId = req.body.empId || generateEmpId();
+  const newEmpId = await generateEmpId();
   const initialStatus = status === "Confirmed" ? "Confirmed" : "Pending";
   const password = req.body.password || (initialStatus === "Confirmed" ? "Password@123" : "");
 
