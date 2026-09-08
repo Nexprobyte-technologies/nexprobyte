@@ -6,15 +6,36 @@ import { getMongoConnected, memoryStore } from "../store/memoryStore.js";
 const router = express.Router();
 
 // Helper to generate next Emp ID like NEX-104
-function generateEmpId() {
+async function generateEmpId() {
+  if (getMongoConnected()) {
+    const employees = await Employee.find(
+      { empId: /^NEX-\d+$/ },
+      { empId: 1, _id: 0 }
+    ).lean();
+
+    const numbers = employees
+      .map((e) => {
+        const match = (e.empId || "").match(/^NEX-(\d+)$/);
+        return match ? parseInt(match[1], 10) : 100;
+      })
+      .filter(Number.isFinite);
+
+    const nextNum = (numbers.length > 0 ? Math.max(...numbers) : 100) + 1;
+
+    return `NEX-${nextNum}`;
+  }
+
   const existing = memoryStore.employees || [];
+
   const numbers = existing
     .map((e) => {
-      const match = (e.empId || "").match(/NEX-(\d+)/);
+      const match = (e.empId || "").match(/^NEX-(\d+)$/);
       return match ? parseInt(match[1], 10) : 100;
     })
-    .filter(Boolean);
+    .filter(Number.isFinite);
+
   const nextNum = (numbers.length > 0 ? Math.max(...numbers) : 100) + 1;
+
   return `NEX-${nextNum}`;
 }
 

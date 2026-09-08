@@ -26,7 +26,7 @@ router.post("/", verifyToken, async (req, res) => {
     return res.status(400).json({ message: "Reason / purpose is required." });
 
   const newExpense = {
-    _id: "exp-" + Date.now(),
+    // _id: "exp-" + Date.now(),
     date: date,
     category: category || "General",
     to: to?.trim() || "",
