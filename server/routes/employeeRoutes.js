@@ -76,6 +76,7 @@ router.get("/:id", verifyToken, async (req, res) => {
 });
 
 // POST: Add new employee (Default status: Pending)
+// 
 router.post("/", verifyToken, async (req, res) => {
   const { name, email, phone, department, designation, joiningDate, status } = req.body;
 
