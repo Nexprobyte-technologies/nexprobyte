@@ -39,7 +39,7 @@ router.post("/", verifyToken, async (req, res) => {
   }
 
   const newLeave = {
-    _id: `lv-${Date.now()}`,
+    // _id: `lv-${Date.now()}`,
     employeeId,
     employeeName,
     leaveType: leaveType || "Casual Leave",
