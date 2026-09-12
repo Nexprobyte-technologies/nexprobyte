@@ -39,7 +39,7 @@ router.post("/", verifyToken, async (req, res) => {
   }
 
   const newReport = {
-    _id: `wr-${Date.now()}`,
+    // _id: `wr-${Date.now()}`,
     employeeId,
     employeeName,
     date: date || new Date().toISOString().split("T")[0],
