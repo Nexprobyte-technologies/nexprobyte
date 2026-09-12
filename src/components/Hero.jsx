@@ -78,15 +78,23 @@ export function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1.1, delay: 0.55, ease: [0.22, 1, 0.36, 1] }}
         >
-          <img
-            src="/images/hero.jpg"
-            alt="Nexprobyte team at work on digital solutions"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            width="1200"
-            height="900"
-          />
+<video
+  src="/images/datas.mp4"
+  autoPlay
+  loop
+  muted
+  playsInline
+  preload="metadata"
+  style={{
+    width: "100%",
+    maxWidth: "1200px",
+    height: "auto",
+    display: "block",
+    margin: "0 auto",
+    borderRadius: "16px",
+    objectFit: "contain",
+  }}
+/>
         </motion.div>
         <span className="tag">Est. Coimbatore</span>
         <span className="coords">10.9997° N, 76.9701° E</span>
