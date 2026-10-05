@@ -2,7 +2,7 @@ import express from "express";
 import nodemailer from "nodemailer";
 import { Inquiry } from "../models/Inquiry.js";
 import { verifyToken } from "../middleware/auth.js";
-import { getMongoConnected, memoryStore } from "../store/memoryStore.js";
+import { getDbConnected, memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 
@@ -74,7 +74,7 @@ router.post("/", async (req, res) => {
 
   let createdDoc = newInquiry;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       createdDoc = await Inquiry.create(newInquiry);
     } catch (e) {
@@ -93,7 +93,7 @@ router.post("/", async (req, res) => {
 
 // Get All Inquiries (GET /api/inquiries - Admin Protected)
 router.get("/", verifyToken, async (req, res) => {
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const docs = await Inquiry.find().sort({ createdAt: -1 });
       return res.json(docs);
@@ -109,7 +109,7 @@ router.put("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const doc = await Inquiry.findByIdAndUpdate(id, { status }, { new: true });
       return res.json(doc);
@@ -130,7 +130,7 @@ router.put("/:id", verifyToken, async (req, res) => {
 router.delete("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       await Inquiry.findByIdAndDelete(id);
       return res.json({ message: "Deleted successfully." });

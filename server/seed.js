@@ -9,7 +9,7 @@ dotenv.config();
 async function seed() {
   const connected = await connectDB();
   if (!connected) {
-    console.error("MongoDB not connected. Check your MONGO_URI in .env");
+    console.error("PostgreSQL not connected. Check your PG_URI/DATABASE_URL in .env");
     process.exit(1);
   }
 

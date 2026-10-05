@@ -1,7 +1,7 @@
 import express from "express";
 import { Application } from "../models/Application.js";
 import { verifyToken } from "../middleware/auth.js";
-import { getMongoConnected, memoryStore } from "../store/memoryStore.js";
+import { getDbConnected, memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 
@@ -45,7 +45,7 @@ router.post("/", async (req, res) => {
     createdAt: new Date().toISOString(),
   };
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const doc = await Application.create(newApp);
       return res.status(201).json({ message: "Application submitted successfully!", application: doc });
@@ -60,7 +60,7 @@ router.post("/", async (req, res) => {
 
 // Get Applications (GET /api/applications - Admin Protected)
 router.get("/", verifyToken, async (req, res) => {
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const docs = await Application.find().sort({ createdAt: -1 });
       return res.json(docs);
@@ -76,7 +76,7 @@ router.put("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const doc = await Application.findByIdAndUpdate(id, { status }, { new: true });
       return res.json(doc);
@@ -97,7 +97,7 @@ router.put("/:id", verifyToken, async (req, res) => {
 router.delete("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       await Application.findByIdAndDelete(id);
       return res.json({ message: "Application deleted successfully." });

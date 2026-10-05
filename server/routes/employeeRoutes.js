@@ -1,14 +1,14 @@
 import express from "express";
 import { Employee } from "../models/Employee.js";
 import { verifyToken } from "../middleware/auth.js";
-import { getMongoConnected, memoryStore } from "../store/memoryStore.js";
+import { getDbConnected, memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 
 // Helper to generate next Emp ID like NEX-104
 // Helper to generate next Emp ID like NEX-104
 async function generateEmpId() {
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     const employees = await Employee.find(
       { empId: /^NEX-\d+$/ },
       { empId: 1, _id: 0 }
@@ -45,7 +45,7 @@ async function generateEmpId() {
 // GET all employees (Super Admin) or current employee
 router.get("/", verifyToken, async (req, res) => {
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const employees = await Employee.find().sort({ createdAt: -1 });
       return res.json(employees);
     }
@@ -60,7 +60,7 @@ router.get("/", verifyToken, async (req, res) => {
 router.get("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const employee = await Employee.findOne({
         $or: [{ _id: id.match(/^[0-9a-fA-F]{24}$/) ? id : null }, { empId: id }],
       });
@@ -108,7 +108,7 @@ router.post("/", verifyToken, async (req, res) => {
   };
 
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const created = await Employee.create(newEmp);
       return res.status(201).json(created);
     }
@@ -140,7 +140,7 @@ router.put("/:id/status", verifyToken, async (req, res) => {
   }
 
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const emp = await Employee.findOne({
         $or: [{ _id: id.match(/^[0-9a-fA-F]{24}$/) ? id : null }, { empId: id }],
       });
@@ -178,7 +178,7 @@ router.put("/:id", verifyToken, async (req, res) => {
   const updates = req.body;
 
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const updated = await Employee.findOneAndUpdate(
         { $or: [{ _id: id.match(/^[0-9a-fA-F]{24}$/) ? id : null }, { empId: id }] },
         updates,
@@ -204,7 +204,7 @@ router.put("/:id", verifyToken, async (req, res) => {
 router.delete("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       await Employee.findOneAndDelete({
         $or: [{ _id: id.match(/^[0-9a-fA-F]{24}$/) ? id : null }, { empId: id }],
       });

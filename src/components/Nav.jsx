@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
+
 const NAV_ITEMS = [
   { label: "Home", to: "/", ord: "01" },
   { label: "About", to: "/about", ord: "02" },
@@ -135,6 +136,7 @@ export function Nav() {
   return (
     <>
       <header className={`nav ${scrolled ? "is-scrolled" : ""}`}>
+
         <div className="wrap nav-inner">
           <motion.span
             initial={{ opacity: 0, y: -16 }}

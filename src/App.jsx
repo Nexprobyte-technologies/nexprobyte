@@ -28,6 +28,7 @@ const AdminAbout = lazy(() => import("./admin/AdminAbout.jsx").then((m) => ({ de
 const AdminBlogs = lazy(() => import("./admin/AdminBlogs.jsx").then((m) => ({ default: m.AdminBlogs || m.default })));
 const AdminProjects = lazy(() => import("./admin/AdminProjects.jsx").then((m) => ({ default: m.AdminProjects || m.default })));
 const AdminAccounts = lazy(() => import("./admin/AdminAccounts.jsx").then((m) => ({ default: m.AdminAccounts || m.default })));
+const AdminQuotations = lazy(() => import("./admin/AdminQuotations.jsx").then((m) => ({ default: m.AdminQuotations || m.default })));
 
 // Employee Portal Components
 const EmployeeDashboard = lazy(() => import("./admin/employee/EmployeeDashboard.jsx").then((m) => ({ default: m.EmployeeDashboard || m.default })));
@@ -150,6 +151,14 @@ export default function App() {
               element={
                 <SuperAdminOnlyRoute>
                   <AdminAccounts />
+                </SuperAdminOnlyRoute>
+              }
+            />
+            <Route
+              path="quotations"
+              element={
+                <SuperAdminOnlyRoute>
+                  <AdminQuotations />
                 </SuperAdminOnlyRoute>
               }
             />

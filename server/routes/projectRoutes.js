@@ -1,7 +1,7 @@
 import express from "express";
 import { Project } from "../models/Project.js";
 import { verifyToken } from "../middleware/auth.js";
-import { getMongoConnected, memoryStore } from "../store/memoryStore.js";
+import { getDbConnected, memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ function generateProjectId() {
 // GET all projects
 router.get("/", verifyToken, async (req, res) => {
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const projects = await Project.find().sort({ createdAt: -1 });
       return res.json(projects);
     }
@@ -36,7 +36,7 @@ router.get("/", verifyToken, async (req, res) => {
 router.get("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const project = await Project.findOne({
         $or: [{ _id: id.match(/^[0-9a-fA-F]{24}$/) ? id : null }, { projectId: id }],
       });
@@ -105,7 +105,7 @@ router.post("/", verifyToken, async (req, res) => {
   };
 
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const created = await Project.create(newProjectData);
       return res.status(201).json(created);
     }
@@ -138,7 +138,7 @@ router.put("/:id", verifyToken, async (req, res) => {
   }
 
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const updated = await Project.findOneAndUpdate(
         { $or: [{ _id: id.match(/^[0-9a-fA-F]{24}$/) ? id : null }, { projectId: id }] },
         { $set: updates },
@@ -176,7 +176,7 @@ router.patch("/:id/status", verifyToken, async (req, res) => {
     if (status !== undefined) updateObj.status = status;
     if (progress !== undefined) updateObj.progress = progress;
 
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const updated = await Project.findOneAndUpdate(
         { $or: [{ _id: id.match(/^[0-9a-fA-F]{24}$/) ? id : null }, { projectId: id }] },
         { $set: updateObj },
@@ -205,7 +205,7 @@ router.patch("/:id/status", verifyToken, async (req, res) => {
 router.delete("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const deleted = await Project.findOneAndDelete({
         $or: [{ _id: id.match(/^[0-9a-fA-F]{24}$/) ? id : null }, { projectId: id }],
       });

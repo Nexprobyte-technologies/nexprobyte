@@ -1,7 +1,7 @@
 import express from "express";
 import { Leave } from "../models/Leave.js";
 import { verifyToken } from "../middleware/auth.js";
-import { getMongoConnected, memoryStore } from "../store/memoryStore.js";
+import { getDbConnected, memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.get("/", verifyToken, async (req, res) => {
   const targetEmpId = isEmployee ? (req.user.empId || req.user.id) : empId;
 
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const query = targetEmpId ? { employeeId: targetEmpId } : {};
       const leaves = await Leave.find(query).sort({ createdAt: -1 });
       return res.json(leaves);
@@ -53,7 +53,7 @@ router.post("/", verifyToken, async (req, res) => {
   };
 
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const created = await Leave.create(newLeave);
       return res.status(201).json(created);
     }
@@ -77,7 +77,7 @@ router.put("/:id/status", verifyToken, async (req, res) => {
   }
 
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const leave = await Leave.findById(id);
       if (!leave) return res.status(404).json({ message: "Leave request not found" });
       leave.status = status;

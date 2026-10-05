@@ -1,7 +1,7 @@
 import express from "express";
 import { Attendance } from "../models/Attendance.js";
 import { verifyToken } from "../middleware/auth.js";
-import { getMongoConnected, memoryStore } from "../store/memoryStore.js";
+import { getDbConnected, memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 
@@ -16,7 +16,7 @@ router.get("/", verifyToken, async (req, res) => {
   const targetEmpId = isEmployee ? (req.user.empId || req.user.id) : empId;
 
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const query = targetEmpId ? { employeeId: targetEmpId } : {};
       const records = await Attendance.find(query).sort({ date: -1, createdAt: -1 });
       return res.json(records);
@@ -46,7 +46,7 @@ router.post("/clockin", verifyToken, async (req, res) => {
   const status = isLate ? "Late" : "Present";
 
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       let existing = await Attendance.findOne({ employeeId, date: today });
       if (existing && !existing.clockOut) {
         return res.status(400).json({ message: "Already clocked in! Please punch out first." });
@@ -113,7 +113,7 @@ router.post("/clockout", verifyToken, async (req, res) => {
   const nowTime = formatTime(new Date());
 
   try {
-    if (getMongoConnected()) {
+    if (getDbConnected()) {
       const record = await Attendance.findOne({ employeeId, date: today });
       if (!record || !record.clockIn) {
         return res.status(404).json({ message: "No active punch-in found for today. Punch in first." });

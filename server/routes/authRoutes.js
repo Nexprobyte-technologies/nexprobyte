@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/User.js";
 import { Employee } from "../models/Employee.js";
 import { verifyToken } from "../middleware/auth.js";
-import { getMongoConnected, memoryStore } from "../store/memoryStore.js";
+import { getDbConnected, memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 const JWT_SECRET = process.env.JWT_SECRET || "nexprobyte_admin_secret_key_2026";
@@ -41,8 +41,8 @@ router.post("/login", async (req, res) => {
     });
   }
 
-  // Check MongoDB User model if connected (for admin roles)
-  if (getMongoConnected()) {
+  // Check PostgreSQL users table if connected (for admin roles)
+  if (getDbConnected()) {
     try {
       const user = await User.findOne({
         $or: [{ username: new RegExp(`^${loginIdentifier}$`, "i") }, { email: loginIdentifier }],
@@ -73,7 +73,7 @@ router.post("/login", async (req, res) => {
   // ─────────────────────────────────────────────────────────────
   let employee = null;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       employee = await Employee.findOne({
         $or: [

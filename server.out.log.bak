@@ -1,0 +1,19 @@
+◇ injected env (0) from .env // tip: ⌁ auth for agents [www.vestauth.com]
+
+📦 [Static]: serving ./dist with gzip + caching
+
+🚀 [Nexprobyte Backend Server Running]: http://localhost:5000
+[PostgreSQL Schema]: 13 tables ready
+[PostgreSQL Seed]: 2 rows → expenses
+[PostgreSQL Seed]: 2 rows → inquiries
+[PostgreSQL Seed]: 1 rows → applications
+[PostgreSQL Seed]: 3 rows → jobs
+[PostgreSQL Seed]: 3 rows → posts
+[PostgreSQL Seed]: 3 rows → employees
+[PostgreSQL Seed]: 3 rows → attendances
+[PostgreSQL Seed]: 2 rows → workreports
+[PostgreSQL Seed]: 1 rows → leaves
+[PostgreSQL Seed]: 2 rows → interviewdatas
+[PostgreSQL Seed]: 3 rows → projects
+[PostgreSQL Seed]: 1 row → abouts
+[PostgreSQL Connected]: postgres://postgres:postgres@localhost:5432/nexprobyte

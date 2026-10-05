@@ -1,13 +1,13 @@
 import express from "express";
 import { Job } from "../models/Job.js";
 import { verifyToken } from "../middleware/auth.js";
-import { getMongoConnected, memoryStore } from "../store/memoryStore.js";
+import { getDbConnected, memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 
 // Get Jobs (GET /api/jobs - Public)
 router.get("/", async (req, res) => {
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const docs = await Job.find().sort({ createdAt: -1 });
       if (docs && docs.length > 0) return res.json(docs);
@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
 // Get Single Job by Slug or ID (GET /api/jobs/:idOrSlug - Public)
 router.get("/:idOrSlug", async (req, res) => {
   const { idOrSlug } = req.params;
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const doc = await Job.findOne({ $or: [{ slug: idOrSlug }, { _id: idOrSlug }] });
       if (doc) return res.json(doc);
@@ -73,7 +73,7 @@ router.post("/", verifyToken, async (req, res) => {
     createdAt: new Date().toISOString(),
   };
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       // Check if slug already exists in Mongo
       const existing = await Job.findOne({ slug: newJob.slug });
@@ -83,7 +83,7 @@ router.post("/", verifyToken, async (req, res) => {
       const doc = await Job.create(newJob);
       return res.status(201).json(doc);
     } catch (e) {
-      console.error("Job create error in MongoDB:", e);
+      console.error("Job create error in PostgreSQL:", e);
       memoryStore.jobs.unshift(newJob);
       return res.status(201).json(newJob);
     }
@@ -98,7 +98,7 @@ router.put("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
   const updates = req.body;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       let doc = null;
       if (id.startsWith("job-")) {
@@ -124,7 +124,7 @@ router.put("/:id", verifyToken, async (req, res) => {
 router.delete("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       if (id.startsWith("job-")) {
         await Job.findOneAndDelete({ $or: [{ _id: id }, { slug: id }] });

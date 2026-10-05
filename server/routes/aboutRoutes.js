@@ -1,13 +1,13 @@
 import express from "express";
 import { verifyToken } from "../middleware/auth.js";
-import { memoryStore, getMongoConnected } from "../store/memoryStore.js";
+import { memoryStore, getDbConnected } from "../store/memoryStore.js";
 import { About } from "../models/About.js";
 
 const router = express.Router();
 
 // Get About Content (Public)
 router.get("/", async (req, res) => {
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       let doc = await About.findOne();
       if (!doc) {
@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
 router.put("/", verifyToken, async (req, res) => {
   const updates = req.body;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       let doc = await About.findOne();
       if (doc) {

@@ -1,0 +1,432 @@
+Seed error: ReferenceError: table is not defined
+    at buildWhere (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:64:26)
+    at Object.findOne (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:174:19)
+    at Server.<anonymous> (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/server.js:115:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Stats API error: TypeError: query is not a function
+    at Object.countDocuments (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:284:23)
+    at file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/routes/statsRoutes.js:20:44
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:117:3)
+    at handle (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:295:15
+    at processParams (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:582:12)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:291:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch employees error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch jobs error from Mongo: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Stats API error: TypeError: query is not a function
+    at Object.countDocuments (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:284:23)
+    at file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/routes/statsRoutes.js:20:44
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:117:3)
+    at handle (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:295:15
+    at processParams (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:582:12)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:291:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch employees error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch jobs error from Mongo: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch projects error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch employees error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch employees error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch projects error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch employees error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch employees error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch projects error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch employees error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch projects error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch employees error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch employees error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch employees error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Stats API error: TypeError: query is not a function
+    at Object.countDocuments (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:284:23)
+    at file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/routes/statsRoutes.js:20:44
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:117:3)
+    at handle (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:295:15
+    at processParams (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:582:12)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:291:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch employees error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Stats API error: TypeError: query is not a function
+    at Object.countDocuments (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:284:23)
+    at file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/routes/statsRoutes.js:20:44
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:117:3)
+    at handle (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:295:15
+    at processParams (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:582:12)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:291:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch employees error: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch jobs error from Mongo: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch jobs error from Mongo: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.findOne (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:178:23)
+    at file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/routes/aboutRoutes.js:12:29
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:117:3)
+    at handle (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:295:15
+    at processParams (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:582:12)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:291:5)
+TypeError: query is not a function
+    at Object.findOne (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:178:23)
+    at file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/routes/aboutRoutes.js:12:29
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:117:3)
+    at handle (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:295:15
+    at processParams (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:582:12)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:291:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Stats API error: TypeError: query is not a function
+    at Object.countDocuments (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:284:23)
+    at file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/routes/statsRoutes.js:20:44
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:117:3)
+    at handle (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:295:15
+    at processParams (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:582:12)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:291:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.findOne (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:178:23)
+    at file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/routes/aboutRoutes.js:12:29
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:117:3)
+    at handle (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:295:15
+    at processParams (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:582:12)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:291:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch jobs error from Mongo: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.findOne (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:178:23)
+    at file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/routes/aboutRoutes.js:12:29
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\route.js:117:3)
+    at handle (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\lib\layer.js:152:17)
+    at D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:295:15
+    at processParams (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:582:12)
+    at next (D:\NEXPROBYTE_ALL_PROJECT\Nex\NEXPROBITE\node_modules\router\index.js:291:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+Fetch jobs error from Mongo: TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+TypeError: query is not a function
+    at Object.exec (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:162:27)
+    at Object.then (file:///D:/NEXPROBYTE_ALL_PROJECT/Nex/NEXPROBITE/server/db/model.js:153:21)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)

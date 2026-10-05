@@ -1,12 +1,13 @@
-let isMongoConnected = false;
+let isDbConnected = false;
 
-export const setMongoConnected = (status) => {
-  isMongoConnected = status;
+export const setDbConnected = (status) => {
+  isDbConnected = status;
 };
 
-export const getMongoConnected = () => isMongoConnected;
+export const getDbConnected = () => isDbConnected;
 
 export const memoryStore = {
+  quotations: [],
   expenses: [
     {
       _id: "exp-1",

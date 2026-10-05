@@ -1,7 +1,7 @@
 import express from "express";
 import { InterviewData } from "../models/InterviewData.js";
 import { verifyToken } from "../middleware/auth.js";
-import { getMongoConnected, memoryStore } from "../store/memoryStore.js";
+import { getDbConnected, memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 
@@ -36,7 +36,7 @@ router.post("/", async (req, res) => {
     createdAt: new Date().toISOString(),
   };
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
   try {
     const doc = await InterviewData.create(newEntry);
     return res.status(201).json({
@@ -58,7 +58,7 @@ router.post("/", async (req, res) => {
 
 // Get All Interview Data (GET /api/interview-data - Admin Protected)
 router.get("/", verifyToken, async (req, res) => {
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const docs = await InterviewData.find().sort({ createdAt: -1 });
       return res.json(docs);
@@ -74,7 +74,7 @@ router.put("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const doc = await InterviewData.findByIdAndUpdate(id, { status }, { new: true });
       if (doc) return res.json(doc);
@@ -120,7 +120,7 @@ router.put("/:id/onboarding", verifyToken, async (req, res) => {
     return res.status(400).json({ message: "No onboarding details provided." });
   }
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const doc = await InterviewData.findById(id);
       if (!doc) return res.status(404).json({ message: "Entry not found." });
@@ -145,7 +145,7 @@ router.put("/:id/full", verifyToken, async (req, res) => {
   const { id } = req.params;
   const patch = req.body;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const doc = await InterviewData.findByIdAndUpdate(id, patch, { new: true });
       if (doc) return res.json(doc);
@@ -167,7 +167,7 @@ router.put("/:id/full", verifyToken, async (req, res) => {
 router.delete("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       await InterviewData.findByIdAndDelete(id);
       return res.json({ message: "Entry deleted successfully." });

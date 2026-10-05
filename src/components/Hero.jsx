@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import { RevealLines } from "./Reveal.jsx";
-import DarkVeil from "./DarkVeil.jsx";
+import ShapeGrid from "./ShapeGrid.jsx";
 
 export function Hero() {
   const ref = useRef(null);
@@ -13,13 +13,14 @@ export function Hero() {
   return (
     <section className="hero wrap" id="top" ref={ref}>
       <div className="hero-background">
-        <DarkVeil
-          speed={0.6}
-          hueShift={20}
-          noiseIntensity={0.03}
-          scanlineIntensity={0.1}
-          warpAmount={0.2}
-          resolutionScale={1}
+        <ShapeGrid
+          direction="right"
+          speed={0.7}
+          borderColor="#4d4955"
+          squareSize={40}
+          hoverFillColor="rgba(255,255,255,0.04)"
+          shape="square"
+          className="hero-grid"
         />
       </div>
       <motion.div style={{ opacity: fade, position: "relative", zIndex: 2 }}>

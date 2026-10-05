@@ -1,7 +1,7 @@
 import express from "express";
 import { Expense } from "../models/Expense.js";
 import { verifyToken } from "../middleware/auth.js";
-import { getMongoConnected, memoryStore } from "../store/memoryStore.js";
+import { getDbConnected, memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 
@@ -38,7 +38,7 @@ router.post("/", verifyToken, async (req, res) => {
     createdAt: new Date().toISOString(),
   };
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const doc = await Expense.create(newExpense);
       return res.status(201).json({ message: "Expense recorded.", entry: doc });
@@ -52,7 +52,7 @@ router.post("/", verifyToken, async (req, res) => {
 
 // Get All Expenses (GET /api/expenses - Admin Protected)
 router.get("/", verifyToken, async (req, res) => {
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const docs = await Expense.find().sort({ createdAt: -1 });
       return res.json(docs);
@@ -73,7 +73,7 @@ router.put("/:id", verifyToken, async (req, res) => {
     if (patch[key] !== undefined) clean[key] = key === "amount" ? Number(patch[key]) : patch[key];
   }
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const doc = await Expense.findByIdAndUpdate(id, clean, { new: true });
       if (doc) return res.json(doc);
@@ -95,7 +95,7 @@ router.put("/:id", verifyToken, async (req, res) => {
 router.delete("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       await Expense.findByIdAndDelete(id);
       return res.json({ message: "Expense deleted." });

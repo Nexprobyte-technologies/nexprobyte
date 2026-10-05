@@ -8,7 +8,7 @@ export function EmployeeWorkStatus() {
   const [search, setSearch] = useState("");
   const [filterStatus, setFilterStatus] = useState("All");
 
-  const [formData, setFormData] = useState({
+const [formData, setFormData] = useState({
     date: new Date().toISOString().split("T")[0],
     projectTitle: "",
     hoursSpent: 8,
@@ -17,8 +17,22 @@ export function EmployeeWorkStatus() {
     blockers: "",
     link: "",
   });
+  const [editingId, setEditingId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [toast, setToast] = useState("");
+
+  const resetFormData = () => {
+    setFormData({
+      date: new Date().toISOString().split("T")[0],
+      projectTitle: "",
+      hoursSpent: 8,
+      status: "Completed",
+      taskDetails: "",
+      blockers: "",
+      link: "",
+    });
+    setEditingId(null);
+  };
 
   const showToastMsg = (m) => {
     setToast(m);
@@ -46,15 +60,17 @@ export function EmployeeWorkStatus() {
     }
   };
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.projectTitle || !formData.taskDetails) return;
 
     setSubmitting(true);
     const token = localStorage.getItem("nex_admin_token");
     try {
-      const res = await fetch("/api/work-reports", {
-        method: "POST",
+      const url = editingId ? `/api/work-reports/${editingId}` : "/api/work-reports";
+      const method = editingId ? "PUT" : "POST";
+      const res = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -63,27 +79,76 @@ export function EmployeeWorkStatus() {
       });
 
       if (res.ok) {
-        const created = await res.json();
-        setReports([created, ...reports]);
+        const saved = await res.json();
+        if (editingId) {
+          setReports(reports.map((r) => (r._id === editingId ? { ...r, ...saved } : r)));
+        } else {
+          setReports([saved, ...reports]);
+        }
         setShowUploadForm(false);
-        setFormData({
-          date: new Date().toISOString().split("T")[0],
-          projectTitle: "",
-          hoursSpent: 8,
-          status: "Completed",
-          taskDetails: "",
-          blockers: "",
-          link: "",
-        });
-        showToastMsg("✅ Daily work status report uploaded successfully!");
+        resetFormData();
+        showToastMsg(editingId ? "💾 Work report saved successfully!" : "✅ Daily work status report uploaded successfully!");
       } else {
-        const data = await res.json();
-        alert(data.message || "Failed to submit report");
+        let message = res.status === 404 ? "Save endpoint not found (server may need a restart)." : `Failed to save report (${res.status})`;
+        try {
+          const data = await res.json();
+          if (data && data.message) message = data.message;
+        } catch (_) {
+          /* response body was not JSON */
+        }
+        alert(message);
       }
     } catch (err) {
-      alert("Error submitting work report");
+      console.error(err);
+      alert("Error saving work report. Please check that the server is running and reload the page.");
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const startEdit = (report) => {
+    setFormData({
+      date: report.date || new Date().toISOString().split("T")[0],
+      projectTitle: report.projectTitle || "",
+      hoursSpent: report.hoursSpent || 8,
+      status: report.status || "Completed",
+      taskDetails: report.taskDetails || "",
+      blockers: report.blockers && report.blockers !== "None" ? report.blockers : "",
+      link: report.link || "",
+    });
+    setEditingId(report._id);
+    setShowUploadForm(true);
+    document.querySelector(".daily-report-form-anchor")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const closeForm = () => {
+    setShowUploadForm(false);
+    resetFormData();
+  };
+
+  const handleDelete = async (report) => {
+    if (!window.confirm(`Delete the work report "${report.projectTitle}"?`)) return;
+    const token = localStorage.getItem("nex_admin_token");
+    try {
+      const res = await fetch(`/api/work-reports/${report._id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        setReports(reports.filter((r) => r._id !== report._id));
+        showToastMsg("🗑️ Work report deleted successfully!");
+      } else {
+        let message = res.status === 404 ? "Delete endpoint not found (server may need a restart)." : `Failed to delete report (${res.status})`;
+        try {
+          const data = await res.json();
+          if (data && data.message) message = data.message;
+        } catch (_) {
+          /* response body was not JSON */
+        }
+        alert(message);
+      }
+    } catch (err) {
+      alert("Error deleting work report. Please check that the server is running.");
     }
   };
 
@@ -128,9 +193,12 @@ export function EmployeeWorkStatus() {
             Employee Portal <span>›</span> Daily Reports <span>›</span> Work Submissions
           </div>
         </div>
-        <button
+<button
           className="paces-btn paces-btn-coral"
-          onClick={() => setShowUploadForm(!showUploadForm)}
+          onClick={() => {
+            if (showUploadForm) resetFormData();
+            setShowUploadForm(!showUploadForm);
+          }}
         >
           {showUploadForm ? "✕ Close Form" : "+ Upload Today's Work Report"}
         </button>
@@ -179,8 +247,8 @@ export function EmployeeWorkStatus() {
 
       {/* Upload Form Card (Collapsible or visible) */}
       {showUploadForm && (
-        <div
-          className="paces-card"
+<div
+          className="paces-card daily-report-form-anchor"
           style={{
             marginBottom: "24px",
             border: "2px solid #ff4d6d",
@@ -189,11 +257,24 @@ export function EmployeeWorkStatus() {
         >
           <div className="paces-card-header">
             <div>
-              <div className="paces-card-title">📤 Upload New Daily Work Status</div>
+              <div className="paces-card-title">
+                {editingId ? "✏️ Edit Daily Work Status" : "📤 Upload New Daily Work Status"}
+              </div>
               <div className="paces-card-subtitle">
-                Submit today's task details, time spent and reference links for team &amp; Super Admin review
+                {editingId
+                  ? "Update the details below and save your changes for team &amp; Super Admin review"
+                  : "Submit today's task details, time spent and reference links for team &amp; Super Admin review"}
               </div>
             </div>
+            {editingId && (
+              <button
+                type="button"
+                className="paces-btn paces-btn-outline"
+                onClick={closeForm}
+              >
+                ✕ Cancel Edit
+              </button>
+            )}
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -283,16 +364,20 @@ export function EmployeeWorkStatus() {
               />
             </div>
 
-            <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+<div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
               <button
                 type="button"
-                onClick={() => setShowUploadForm(false)}
+                onClick={closeForm}
                 className="paces-btn paces-btn-outline"
               >
                 Cancel
               </button>
               <button type="submit" className="paces-btn paces-btn-coral" disabled={submitting}>
-                {submitting ? "Uploading..." : "✓ Submit Daily Work Report"}
+                {submitting
+                  ? "Saving..."
+                  : editingId
+                  ? "💾 Save Changes"
+                  : "✓ Submit Daily Work Report"}
               </button>
             </div>
           </form>
@@ -363,9 +448,9 @@ export function EmployeeWorkStatus() {
           </div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column" }}>
-            {filteredReports.map((report, idx) => (
+{filteredReports.map((report, idx) => (
               <div
-                key={idx}
+                key={report._id || idx}
                 style={{
                   padding: "18px 24px",
                   borderBottom: "1px solid var(--p-card-border)",
@@ -423,7 +508,7 @@ export function EmployeeWorkStatus() {
                   {report.taskDetails}
                 </p>
 
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", marginTop: "8px", gap: "10px" }}>
+<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", marginTop: "8px", gap: "10px" }}>
                   {report.blockers && report.blockers !== "None" ? (
                     <div style={{ fontSize: "12px", color: "#dc2626", fontWeight: 600 }}>
                       ⚠️ Blocker: {report.blockers}
@@ -450,6 +535,47 @@ export function EmployeeWorkStatus() {
                       🔗 View Work Deliverable →
                     </a>
                   )}
+                </div>
+
+                <div style={{ display: "flex", gap: "10px", marginTop: "12px", borderTop: "1px dashed var(--p-card-border)", paddingTop: "12px" }}>
+                  <button
+                    type="button"
+                    onClick={() => startEdit(report)}
+                    style={{
+                      fontSize: "12.5px",
+                      fontWeight: 700,
+                      color: "#2563eb",
+                      background: "#eff6ff",
+                      border: "1px solid #bfdbfe",
+                      borderRadius: "8px",
+                      padding: "6px 14px",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                  >
+                    ✏️ Edit
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(report)}
+                    style={{
+                      fontSize: "12.5px",
+                      fontWeight: 700,
+                      color: "#dc2626",
+                      background: "#fef2f2",
+                      border: "1px solid #fecaca",
+                      borderRadius: "8px",
+                      padding: "6px 14px",
+                      cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                  >
+                    🗑️ Delete
+                  </button>
                 </div>
               </div>
             ))}

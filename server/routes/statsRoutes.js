@@ -7,7 +7,7 @@ import { Attendance } from "../models/Attendance.js";
 import { Leave } from "../models/Leave.js";
 import { WorkReport } from "../models/WorkReport.js";
 import { Project } from "../models/Project.js";
-import { getMongoConnected, memoryStore } from "../store/memoryStore.js";
+import { getDbConnected, memoryStore } from "../store/memoryStore.js";
 
 const router = express.Router();
 
@@ -15,7 +15,7 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const todayStr = new Date().toISOString().split("T")[0];
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const inquiriesCount = await Inquiry.countDocuments();
       const newInquiries = await Inquiry.countDocuments({ status: "New" });

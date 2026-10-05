@@ -1,13 +1,13 @@
 import express from "express";
 import { verifyToken } from "../middleware/auth.js";
-import { memoryStore, getMongoConnected } from "../store/memoryStore.js";
+import { memoryStore, getDbConnected } from "../store/memoryStore.js";
 import { Post } from "../models/Post.js";
 
 const router = express.Router();
 
 // Get All Blog Posts (Public)
 router.get("/", async (req, res) => {
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const docs = await Post.find().sort({ createdAt: -1 });
       if (docs.length > 0) return res.json(docs);
@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
 // Get Single Blog Post by Slug (Public)
 router.get("/:slug", async (req, res) => {
   const { slug } = req.params;
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const doc = await Post.findOne({ slug });
       if (doc) {
@@ -76,7 +76,7 @@ router.post("/", verifyToken, async (req, res) => {
     createdAt: new Date().toISOString(),
   };
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const doc = await Post.create(newPost);
       return res.status(201).json(doc);
@@ -94,7 +94,7 @@ router.put("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
   const updates = req.body;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       const doc = await Post.findByIdAndUpdate(id, updates, { new: true });
       if (doc) return res.json(doc);
@@ -115,7 +115,7 @@ router.put("/:id", verifyToken, async (req, res) => {
 router.delete("/:id", verifyToken, async (req, res) => {
   const { id } = req.params;
 
-  if (getMongoConnected()) {
+  if (getDbConnected()) {
     try {
       await Post.findByIdAndDelete(id);
       return res.json({ message: "Post deleted successfully." });

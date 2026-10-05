@@ -9,7 +9,7 @@ import { fileURLToPath } from "url";
 import compression from "compression";
 import { connectDB } from "./config/db.js";
 import { User } from "./models/User.js";
-import { setMongoConnected } from "./store/memoryStore.js";
+import { setDbConnected } from "./store/memoryStore.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import statsRoutes from "./routes/statsRoutes.js";
@@ -25,6 +25,7 @@ import leaveRoutes from "./routes/leaveRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
 import interviewDataRoutes from "./routes/interviewDataRoutes.js";
 import expenseRoutes from "./routes/expenseRoutes.js";
+import quotationRoutes from "./routes/quotationRoutes.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -60,6 +61,7 @@ app.use("/api/leaves", leaveRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/interview-data", interviewDataRoutes);
 app.use("/api/expenses", expenseRoutes);
+app.use("/api/quotations", quotationRoutes);
 
 // Root health check endpoint
 app.get("/api/health", (req, res) => {
@@ -106,11 +108,11 @@ if (fs.existsSync(path.join(distDir, "index.html"))) {
 // Start Server
 app.listen(PORT, async () => {
   console.log(`\n🚀 [Nexprobyte Backend Server Running]: http://localhost:${PORT}`);
-  const isMongoConnected = await connectDB();
-  setMongoConnected(isMongoConnected);
+  const isDbConnected = await connectDB();
+  setDbConnected(isDbConnected);
   
-  if (isMongoConnected) {
-    // Seed admin if MongoDB connected
+  if (isDbConnected) {
+    // Seed admin if PostgreSQL connected
     try {
       const existingAdmin = await User.findOne({ username: "NexAdmin" });
       if (!existingAdmin) {
@@ -120,7 +122,7 @@ app.listen(PORT, async () => {
           name: "Nexpro Admin",
           role: "admin"
         });
-        console.log("✅ [MongoDB Seeded]: Default Admin User Created (NexAdmin / Nex@.1A)");
+        console.log("✅ [PostgreSQL Seeded]: Default Admin User Created (NexAdmin / Nex@.1A)");
       }
     } catch (e) {
       console.error("Seed error:", e);
